@@ -17,7 +17,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Fragment moonFragment;
     private Button button;
     private Button button2;
-    final FragmentTransaction ft = this.fm.beginTransaction();
+//    final FragmentTransaction ft = this.fm.beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         button = (Button) findViewById(R.id.fragment_sun_button);
         button2 = (Button) findViewById(R.id.fragment_moon_button);
 
-
+        replaceFragment(sunFragment);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +59,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     @Override
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container2, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
 //        fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.commit();
     }

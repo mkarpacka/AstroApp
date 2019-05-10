@@ -4,46 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+<GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:columnCount="2"
+    android:rowCount="3">
 
     <Button
         android:id="@+id/fragment_sun_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="fragment1"
+        android:text="SUN"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/fragment_moon_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="fragment2"
+        android:text="MOON"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
         tools:ignore="MissingConstraints" />
 
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:orientation="vertical">
+</GridLayout>
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_purple"
-            android:layout_weight="5">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="1"
+        android:rowCount="1">
 
-        </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/fragment_container2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_bright"
-            android:layout_weight="5">
 
-        </FrameLayout>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:text="MOON"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        tools:ignore="MissingConstraints" />
 
-    </LinearLayout>
+    </GridLayout>
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_rowWeight="1"-->
+    <!--android:layout_columnWeight="1"-->
+    <!--&gt;-->
+
+    <!--<FrameLayout-->
+    <!--android:id="@+id/fragment_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_rowWeight="1"-->
+    <!--android:layout_columnWeight="1"-->
+    <!--android:layout_gravity="fill">-->
+
+    <!--</FrameLayout>-->
+
+    <!--<FrameLayout-->
+    <!--android:id="@+id/fragment_container2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:background="@android:color/holo_blue_bright"-->
+    <!--android:layout_weight="5">-->
+
+    <!--</FrameLayout>-->
+
+    <!--</LinearLayout>-->
+
 
 
 
