@@ -33,6 +33,13 @@ public class SunFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void showOtherFragment()
+    {
+        Fragment fr=new MoonFragment();
+        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
+        fc.replaceFragment(fr);
+    }
+
 //    /**
 //     * Use this factory method to create a new instance of
 //     * this fragment using the provided parameters.

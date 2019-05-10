@@ -11,12 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements FragmentChangeListener{
     private final FragmentManager fm = getSupportFragmentManager();
     private Fragment sunFragment;
     private Fragment moonFragment;
     private Button button;
     private Button button2;
+    final FragmentTransaction ft = this.fm.beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,35 +31,41 @@ public class MainActivity extends FragmentActivity {
         button = (Button) findViewById(R.id.fragment_sun_button);
         button2 = (Button) findViewById(R.id.fragment_moon_button);
 
-        final FragmentTransaction ft = this.fm.beginTransaction();
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ft.replace(R.id.fragment_container, sunFragment);
-                ft.commit();
+//                ft.replace(R.id.fragment_container, sunFragment);
+//                ft.commit();
+                replaceFragment(sunFragment);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ft.replace(R.id.fragment_container, moonFragment);
-//                ft.replace(R.id.fragment_container2, moonFragment);
-                ft.commit();
+//                ft.replace(R.id.fragment_container, moonFragment);
+////                ft.replace(R.id.fragment_container2, moonFragment);
+//                ft.commit();
+                replaceFragment(moonFragment);
             }
+
         });
 
 
 
     }
 
-//    public void openFragment() {
-//        SunFragment fragment = new SunFragment();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.addToBackStack(null);
-//        transaction.add(R.id.fragment_sun_button, fragment).commit();
-//    }
+    @Override
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container2, fragment);
+//        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
+    }
+
 
 }
 

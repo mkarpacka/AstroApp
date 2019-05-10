@@ -32,6 +32,12 @@ public class MoonFragment extends Fragment {
     public MoonFragment() {
         // Required empty public constructor
     }
+    public void showOtherFragment()
+    {
+        Fragment fr=new SunFragment();
+        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
+        fc.replaceFragment(fr);
+    }
 //
 //    /**
 //     * Use this factory method to create a new instance of
