@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -28,6 +32,8 @@ public class SunFragment extends Fragment {
 //    private String mParam2;
 //
 //    private OnFragmentInteractionListener mListener;
+    private TextView timeText;
+    private View view;
 
     public SunFragment() {
         // Required empty public constructor
@@ -38,6 +44,46 @@ public class SunFragment extends Fragment {
         Fragment fr=new MoonFragment();
         FragmentChangeListener fc=(FragmentChangeListener)getActivity();
         fc.replaceFragment(fr);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_sun, container,
+                false);
+
+        startTimeThread();
+        return view;
+    }
+
+    public void startTimeThread(){
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        if(getActivity() == null)
+                            return;
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                timeText = (TextView) view.findViewById(R.id.time_place);
+
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String formattedDate = df.format(c.getTime());
+
+                                timeText.setText(formattedDate);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t.start();
     }
 
 //    /**
@@ -112,10 +158,5 @@ public class SunFragment extends Fragment {
 //        // TODO: Update argument type and name
 //        void onFragmentInteraction(Uri uri);
 //    }
-@Override
-public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_sun, container, false);
-}
+
 }

@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         button2 = (Button) findViewById(R.id.fragment_moon_button);
 
 
-        startTimeThread();
+//        startTimeThread();
         replaceFragment(sunFragment);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -69,32 +69,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         fragmentTransaction.commit();
     }
 
-    public void startTimeThread(){
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                timeText = findViewById(R.id.time_place);
 
-                                Calendar c = Calendar.getInstance();
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                String formattedDate = df.format(c.getTime());
-
-                                timeText.setText(formattedDate);
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-        t.start();
-    }
 }
 
 
