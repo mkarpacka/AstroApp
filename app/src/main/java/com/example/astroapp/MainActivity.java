@@ -10,6 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends FragmentActivity implements FragmentChangeListener{
     private final FragmentManager fm = getSupportFragmentManager();
@@ -17,6 +23,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Fragment moonFragment;
     private Button button;
     private Button button2;
+    private TextView timeText;
 //    final FragmentTransaction ft = this.fm.beginTransaction();
 
     @Override
@@ -31,22 +38,19 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         button = (Button) findViewById(R.id.fragment_sun_button);
         button2 = (Button) findViewById(R.id.fragment_moon_button);
 
+
+//        startTimeThread();
         replaceFragment(sunFragment);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ft.replace(R.id.fragment_container, sunFragment);
-//                ft.commit();
                 replaceFragment(sunFragment);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ft.replace(R.id.fragment_container, moonFragment);
-////                ft.replace(R.id.fragment_container2, moonFragment);
-//                ft.commit();
                 replaceFragment(moonFragment);
             }
 
@@ -67,6 +71,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
 
 }
+
+
+
 
 
 
