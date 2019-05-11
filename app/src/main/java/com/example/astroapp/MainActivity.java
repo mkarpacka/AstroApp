@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity implements FragmentChangeListener{
@@ -26,6 +27,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Button localButton;
     private Button button2;
     private TextView timeText;
+    String m_Text="";
 //    final FragmentTransaction ft = this.fm.beginTransaction();
 
     @Override
@@ -80,23 +82,39 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     }
 
     public void createAlertDialog(){
-        new AlertDialog.Builder(this)
-                .setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete this entry?")
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                    }
-                })
+        String pass = "";
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+            // get prompts.xml view
+            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+            View promptView = layoutInflater.inflate(R.layout.localization_input, null);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setView(promptView);
+
+            EditText dlugosc = (EditText) promptView.findViewById(R.id.dlugosc);
+            EditText szerokosc = (EditText) promptView.findViewById(R.id.szerokosc);
+
+            alertDialogBuilder.setTitle("Set localization");
+            alertDialogBuilder.setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create an alert dialog
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+
     }
+
 
 
 }
