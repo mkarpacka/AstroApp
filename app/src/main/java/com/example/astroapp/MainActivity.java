@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
+public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener, MoonFragment.MoonFragmentListener {
     private final FragmentManager fm = getSupportFragmentManager();
     private Fragment sunFragment;
     private Fragment moonFragment;
@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
         InputFragment editNameDialogFragment = InputFragment.newInstance("Some Title");
+
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
@@ -42,6 +43,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onFragmentInteraction(String s) {
+        Toast.makeText(this, "Hi, " + s, Toast.LENGTH_SHORT).show();
+    }
 
 
     @Override
@@ -95,7 +100,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 //        fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.commit();
     }
-
 
 
 }

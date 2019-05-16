@@ -46,6 +46,7 @@ public class MoonFragment extends Fragment {
     private TextView nextFullMoonText;
     private TextView dayMonthText;
     private TextView illumText;
+    private TextView coordinatesText;
     private View view;
     private String formattedDate;
 
@@ -64,11 +65,13 @@ public class MoonFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
+        MoonFragmentListener listener = (MoonFragmentListener) getActivity();
+        listener.onFragmentInteraction(s);
+
         startTimeThread();
         sampleAstroInfo();
         return view;
     }
-
 
     public void startTimeThread(){
         Thread t = new Thread() {
@@ -163,10 +166,6 @@ public class MoonFragment extends Fragment {
         String [] separateDateTime = splitDateTime(formattedDate);
         String [] separateHourMinSec = separateDateTime[1].split(":");
 
-//        for(int i=0; i<separateHourMinSec.length; i++){
-//            Log.i("hej", separateHourMinSec[i]);
-//        }
-
 
         return separateHourMinSec;
     }
@@ -184,6 +183,12 @@ public class MoonFragment extends Fragment {
         String returnedString = tempToFormatDate[index];
 
         return returnedString;
+    }
+
+    String s = "50";
+
+    public interface MoonFragmentListener {
+        void onFragmentInteraction(String s);
     }
 
 //
@@ -255,9 +260,6 @@ public class MoonFragment extends Fragment {
 //     * "http://developer.android.com/training/basics/fragments/communicating.html"
 //     * >Communicating with Other Fragments</a> for more information.
 //     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+
 
 }
