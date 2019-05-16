@@ -28,8 +28,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Button localButton;
     private Button button2;
     private TextView timeText;
-    String m_Text="";
-//    final FragmentTransaction ft = this.fm.beginTransaction();
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
@@ -39,12 +37,24 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     }
 
     @Override
-    public void onFinishEditDialog(String inputText) {
+    public void onFinishEditDialog(String inputText, String inputText2) {
         Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
-        MoonFragment moonFragment = new MoonFragment();
-        getSupportFragmentManager().beginTransaction().
-                add(R.id.fragment_container, moonFragment).commit();
-        moonFragment.setCoordinatesLongitude(inputText);
+        moonFragment = new MoonFragment();
+
+        ((MoonFragment) moonFragment).setCoordinatesLatitudeText(inputText);
+        ((MoonFragment) moonFragment).setCoordinatesLongitude(inputText2);
+
+        replaceFragment(moonFragment);
+    }
+
+    @Override
+    public void onFinish(String inputText, String inputText2) {
+        sunFragment = new SunFragment();
+        ((SunFragment) sunFragment).setCoordinatesLatitudeText(inputText);
+        ((SunFragment) sunFragment).setCoordinatesLongitude(inputText2);
+
+        replaceFragment(sunFragment);
+
     }
 
     @Override

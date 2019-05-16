@@ -91,7 +91,8 @@ public class InputFragment extends DialogFragment {
             public void onClick(View v) {
                 Log.i("hej", "clicked");
                 InputFragmentListener listener = (InputFragmentListener) getActivity();
-                listener.onFinishEditDialog(mEditText.getText().toString());
+                listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
+                listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
                 dismiss();
             }
         });
@@ -121,7 +122,8 @@ public class InputFragment extends DialogFragment {
 
 
     public interface InputFragmentListener {
-        void onFinishEditDialog(String inputText);
+        void onFinishEditDialog(String inputText, String inputText2);
+        void onFinish(String inputText, String inputText2);
     }
 
 

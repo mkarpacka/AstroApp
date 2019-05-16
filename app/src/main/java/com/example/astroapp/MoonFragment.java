@@ -74,8 +74,8 @@ public class MoonFragment extends Fragment {
     }
 
     public void setCoordinatesLatitudeText(String s){
-        longitude = Double.parseDouble(s);
-        Log.i("hej", Double.toString(longitude));
+        latitude = Double.parseDouble(s);
+        Log.i("hej", Double.toString(latitude));
         if(latitudeText != null) {
             latitudeText.setText(s);
         }

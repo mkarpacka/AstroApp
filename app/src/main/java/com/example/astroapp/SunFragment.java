@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,13 @@ public class SunFragment extends Fragment {
     private TextView sunsetText;
     private TextView twilightMorningText;
     private TextView twilightEveningText;
+    private TextView latitudeText;
+    private TextView longitudeText;
     private View view;
     private String formattedDate;
 
+    double latitude = 51.7;
+    double longitude = 19.4;
 
     public SunFragment() {
         // Required empty public constructor
@@ -57,11 +62,33 @@ public class SunFragment extends Fragment {
         fc.replaceFragment(fr);
     }
 
+    private String holder = "";
+    public void setCoordinatesLongitude(String s){
+        longitude = Double.parseDouble(s);
+        Log.i("hej", Double.toString(longitude));
+        if(longitudeText != null){
+            longitudeText.setText(s);
+        }
+    }
+
+    public void setCoordinatesLatitudeText(String s){
+        latitude = Double.parseDouble(s);
+        Log.i("hej", Double.toString(latitude));
+        if(latitudeText != null) {
+            latitudeText.setText(s);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sun, container,
                 false);
+        latitudeText = (TextView) view.findViewById(R.id.latitude);
+        latitudeText.setText(Double.toString(latitude));
+
+        longitudeText = (TextView) view.findViewById(R.id.longitude);
+        longitudeText.setText(Double.toString(longitude));
 
         startTimeThread();
         sampleAstroInfo();
@@ -82,8 +109,6 @@ public class SunFragment extends Fragment {
         String [] splitedDate = splitDate();
         String [] splitedTime = splitTime();
 
-        double latitude = 51.7;
-        double longitude = 19.4;
 
         AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 
@@ -153,11 +178,6 @@ public class SunFragment extends Fragment {
 
         String [] separateDateTime = splitDateTime(formattedDate);
         String [] separateHourMinSec = separateDateTime[1].split(":");
-
-//        for(int i=0; i<separateHourMinSec.length; i++){
-//            Log.i("hej", separateHourMinSec[i]);
-//        }
-
 
         return separateHourMinSec;
     }
