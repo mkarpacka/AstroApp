@@ -21,12 +21,10 @@ import android.widget.TextView;
 
 
 public class InputFragment extends DialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    // TODO: Zabezpieczenie wpisywanych danych, layouty na tablet i horyzontalny na telefon, refresh, zapamiętywanie przy obracaniu
     private String mParam1;
     private String mParam2;
     private EditText mEditText;

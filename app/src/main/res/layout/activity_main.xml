@@ -13,36 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         tools:ignore="MissingConstraints" />
-<GridLayout
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:columnCount="2"
-    android:rowCount="3">
-
-    <Button
-        android:id="@+id/fragment_sun_button"
-        android:text="SUN"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/fragment_moon_button"
-        android:text="MOON"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        tools:ignore="MissingConstraints" />
-
-
-
-</GridLayout>
-
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="1"
-        android:rowCount="2">
+        android:layout_height="50dp"
+        android:columnCount="2"
+        android:rowCount="3">
+
+        <Button
+            android:id="@+id/fragment_sun_button"
+            android:text="SUN"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/fragment_moon_button"
+            android:text="MOON"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            tools:ignore="MissingConstraints" />
+
+    </GridLayout>
+
+
+    <!--<GridLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:columnCount="1"-->
+        <!--android:rowCount="2">-->
 
 
 
@@ -50,6 +49,8 @@
         android:id="@+id/fragment_container"
         android:layout_rowWeight="1"
         android:layout_columnWeight="1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_gravity="fill"
         tools:ignore="MissingConstraints" />
 
@@ -59,7 +60,7 @@
             <!--android:layout_columnWeight="1"-->
             <!--android:background="@android:color/holo_blue_bright" />-->
 
-    </GridLayout>
+    <!--</GridLayout>-->
 
 
 

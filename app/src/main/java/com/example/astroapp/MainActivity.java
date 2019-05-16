@@ -31,14 +31,14 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        InputFragment editNameDialogFragment = InputFragment.newInstance("Some Title");
+        InputFragment editNameDialogFragment = InputFragment.newInstance("Ustawienia lokalizacji");
 
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
     @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
-        Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Zaktualizowano ustawienia", Toast.LENGTH_SHORT).show();
         moonFragment = new MoonFragment();
 
         ((MoonFragment) moonFragment).setCoordinatesLatitudeText(inputText);
@@ -115,6 +115,28 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putDouble("s1", ((SunFragment) sunFragment).latitude);
+        savedInstanceState.putDouble("s2", ((SunFragment) sunFragment).longitude);
+
+        savedInstanceState.putDouble("s3", ((MoonFragment) moonFragment).latitude);
+        savedInstanceState.putDouble("s4", ((MoonFragment) moonFragment).longitude);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        ((SunFragment) sunFragment).setCoordinatesLatitudeText(Double.toString(savedInstanceState.getDouble("s1")));
+        ((SunFragment) sunFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s2")));
+
+        ((MoonFragment) moonFragment).setCoordinatesLatitudeText(Double.toString(savedInstanceState.getDouble("s3")));
+        ((MoonFragment) moonFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s4")));
+    }
 
 }
 
