@@ -11,11 +11,11 @@
         android:id="@+id/set_localization_button"
         android:text="Set localization"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         tools:ignore="MissingConstraints" />
 <GridLayout
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="50dp"
     android:columnCount="2"
     android:rowCount="3">
 
@@ -60,9 +60,6 @@
             android:background="@android:color/holo_blue_bright" />
 
     </GridLayout>
-
-
-
 
 
 

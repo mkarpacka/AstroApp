@@ -4,13 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.astrocalculator.AstroCalculator;
+import com.astrocalculator.AstroDateTime;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -34,7 +40,14 @@ public class MoonFragment extends Fragment {
 //    private OnFragmentInteractionListener mListener;
 //
     private TextView timeText;
+    private TextView moonRiseText;
+    private TextView moonSetText;
+    private TextView nextNewMoonText;
+    private TextView nextFullMoonText;
+    private TextView dayMonthText;
+    private TextView illumText;
     private View view;
+    private String formattedDate;
 
     public MoonFragment() {
         // Required empty public constructor
@@ -52,6 +65,7 @@ public class MoonFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
         startTimeThread();
+        sampleAstroInfo();
         return view;
     }
 
@@ -62,22 +76,23 @@ public class MoonFragment extends Fragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
-
                         if(getActivity() == null)
                             return;
+
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 timeText = (TextView) view.findViewById(R.id.time_place);
 
                                 Calendar c = Calendar.getInstance();
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                                 String formattedDate = df.format(c.getTime());
 
                                 timeText.setText(formattedDate);
+
                             }
                         });
+                        Thread.sleep(1000);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -86,6 +101,90 @@ public class MoonFragment extends Fragment {
         t.start();
     }
 
+    public void sampleAstroInfo(){
+        moonRiseText= (TextView) view.findViewById(R.id.moonRise);
+        moonSetText = (TextView) view.findViewById(R.id.moonSet);
+        nextNewMoonText = (TextView) view.findViewById(R.id.nextNewMoon);
+        nextFullMoonText = (TextView) view.findViewById(R.id.nextFullMoon);
+        dayMonthText = (TextView) view.findViewById(R.id.dayMonth);
+        illumText = (TextView) view.findViewById(R.id.illumination);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDate = df.format(c.getTime());
+
+        String [] splitedDate = splitDate();
+        String [] splitedTime = splitTime();
+
+        double latitude = 51.7;
+        double longitude = 19.4;
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
+
+        AstroDateTime astroDateTime = new AstroDateTime();
+        astroDateTime.setDay(Integer.parseInt(splitedDate[2]));
+        astroDateTime.setMonth(Integer.parseInt(splitedDate[1]));
+        astroDateTime.setYear(Integer.parseInt(splitedDate[0]));
+
+        astroDateTime.setHour(Integer.parseInt(splitedTime[0]));
+        astroDateTime.setMinute(Integer.parseInt(splitedTime[1]));
+        astroDateTime.setSecond(Integer.parseInt(splitedTime[2]));
+
+        astroDateTime.setTimezoneOffset(2);
+
+        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
+
+
+        String moonRise = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonrise().toString(), 1);
+        String moonSet = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonset().toString(), 1);
+        String nextNewMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 1);
+        String nextFullMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 1);
+        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge());
+        String illumination = Double.toString(astroCalculator.getMoonInfo().getIllumination()*100).substring(0,4) +"%";
+
+
+        moonRiseText.setText(moonRise);
+        moonSetText.setText(moonSet);
+        nextNewMoonText.setText(nextNewMoon);
+        nextFullMoonText.setText(nextFullMoon);
+        dayMonthText.setText(dayMonth);
+        illumText.setText(illumination);
+    }
+
+    public String[] splitDateTime(String formattedDate){
+
+        String [] separateDateTime = formattedDate.split(" ");
+
+        return separateDateTime;
+    }
+
+    public String[] splitTime(){
+
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateHourMinSec = separateDateTime[1].split(":");
+
+//        for(int i=0; i<separateHourMinSec.length; i++){
+//            Log.i("hej", separateHourMinSec[i]);
+//        }
+
+
+        return separateHourMinSec;
+    }
+
+    public String[] splitDate(){
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateYearMonthDay = separateDateTime[0].split("-");
+
+        return separateYearMonthDay;
+    }
+
+    public String getPartOfSplitedDate(String str, int index){
+        String [] tempToFormatDate = splitDateTime(str);
+
+        String returnedString = tempToFormatDate[index];
+
+        return returnedString;
+    }
 
 //
 //    /**

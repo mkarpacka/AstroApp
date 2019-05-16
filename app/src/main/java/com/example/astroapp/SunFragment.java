@@ -15,6 +15,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.astrocalculator.AstroCalculator;
+import com.astrocalculator.AstroDateTime;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +39,13 @@ public class SunFragment extends Fragment {
 //
 //    private OnFragmentInteractionListener mListener;
     private TextView timeText;
+    private TextView sunriseText;
+    private TextView sunsetText;
+    private TextView twilightMorningText;
+    private TextView twilightEveningText;
     private View view;
-    private String m_Text = "";
+    private String formattedDate;
+
 
     public SunFragment() {
         // Required empty public constructor
@@ -56,7 +64,52 @@ public class SunFragment extends Fragment {
                 false);
 
         startTimeThread();
+        sampleAstroInfo();
         return view;
+    }
+
+
+    public void sampleAstroInfo(){
+        sunriseText= (TextView) view.findViewById(R.id.sunrise);
+        sunsetText = (TextView) view.findViewById(R.id.sunset);
+        twilightMorningText = (TextView) view.findViewById(R.id.twilightMorning);
+        twilightEveningText = (TextView) view.findViewById(R.id.twilightEvening);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDate = df.format(c.getTime());
+
+        String [] splitedDate = splitDate();
+        String [] splitedTime = splitTime();
+
+        double latitude = 51.7;
+        double longitude = 19.4;
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
+
+        AstroDateTime astroDateTime = new AstroDateTime();
+        astroDateTime.setDay(Integer.parseInt(splitedDate[2]));
+        astroDateTime.setMonth(Integer.parseInt(splitedDate[1]));
+        astroDateTime.setYear(Integer.parseInt(splitedDate[0]));
+
+        astroDateTime.setHour(Integer.parseInt(splitedTime[0]));
+        astroDateTime.setMinute(Integer.parseInt(splitedTime[1]));
+        astroDateTime.setSecond(Integer.parseInt(splitedTime[2]));
+
+        astroDateTime.setTimezoneOffset(2);
+
+        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
+
+        String sunrise = getPartOfSplitedDate(astroCalculator.getSunInfo().getSunrise().toString(),1);
+        String sunset = getPartOfSplitedDate(astroCalculator.getSunInfo().getSunset().toString(), 1);
+        String twilightMorning = getPartOfSplitedDate(astroCalculator.getSunInfo().getTwilightMorning().toString(), 1);
+        String twilightEvening = getPartOfSplitedDate(astroCalculator.getSunInfo().getTwilightEvening().toString(), 1);
+
+
+        sunriseText.setText(sunrise);
+        sunsetText.setText(sunset);
+        twilightMorningText.setText(twilightMorning);
+        twilightEveningText.setText(twilightEvening);
     }
 
     public void startTimeThread(){
@@ -65,7 +118,6 @@ public class SunFragment extends Fragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
                         if(getActivity() == null)
                             return;
 
@@ -75,18 +127,54 @@ public class SunFragment extends Fragment {
                                 timeText = (TextView) view.findViewById(R.id.time_place);
 
                                 Calendar c = Calendar.getInstance();
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                                 String formattedDate = df.format(c.getTime());
 
                                 timeText.setText(formattedDate);
                             }
                         });
+                        Thread.sleep(1000);
                     }
                 } catch (InterruptedException e) {
                 }
             }
         };
         t.start();
+    }
+
+    public String[] splitDateTime(String formattedDate){
+
+        String [] separateDateTime = formattedDate.split(" ");
+
+        return separateDateTime;
+    }
+
+    public String[] splitTime(){
+
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateHourMinSec = separateDateTime[1].split(":");
+
+//        for(int i=0; i<separateHourMinSec.length; i++){
+//            Log.i("hej", separateHourMinSec[i]);
+//        }
+
+
+        return separateHourMinSec;
+    }
+
+    public String[] splitDate(){
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateYearMonthDay = separateDateTime[0].split("-");
+
+        return separateYearMonthDay;
+    }
+
+    public String getPartOfSplitedDate(String str, int index){
+        String [] tempToFormatDate = splitDateTime(str);
+
+        String returnedString = tempToFormatDate[index];
+
+        return returnedString;
     }
 
 //    /**
