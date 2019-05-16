@@ -12,6 +12,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.astrocalculator.AstroCalculator;
+import com.astrocalculator.AstroDateTime;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +36,7 @@ public class SunFragment extends Fragment {
 //
 //    private OnFragmentInteractionListener mListener;
     private TextView timeText;
+    private TextView textView;
     private View view;
 
     public SunFragment() {
@@ -53,6 +57,7 @@ public class SunFragment extends Fragment {
                 false);
 
         startTimeThread();
+        sampleAstroInfo();
         return view;
     }
 
@@ -84,6 +89,21 @@ public class SunFragment extends Fragment {
             }
         };
         t.start();
+    }
+
+    public void sampleAstroInfo(){
+        textView = (TextView) view.findViewById(R.id.textView);
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(-50.0, -15.0);
+
+        AstroDateTime astroDateTime = new AstroDateTime();
+        astroDateTime.setDay(24);
+        astroDateTime.setMonth(4);
+        astroDateTime.setYear(2019);
+
+        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
+
+        textView.setText(astroCalculator.getSunInfo().getSunrise().toString());
     }
 
 //    /**
