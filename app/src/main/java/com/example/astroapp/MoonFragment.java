@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.astrocalculator.AstroCalculator;
+import com.astrocalculator.AstroDateTime;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -34,6 +37,12 @@ public class MoonFragment extends Fragment {
 //    private OnFragmentInteractionListener mListener;
 //
     private TextView timeText;
+    private TextView moonRiseText;
+    private TextView moonSetText;
+    private TextView nextNewMoonText;
+    private TextView nextFullMoonText;
+    private TextView dayMonthText;
+    private TextView illumText;
     private View view;
 
     public MoonFragment() {
@@ -52,6 +61,7 @@ public class MoonFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
         startTimeThread();
+        sampleAstroInfo();
         return view;
     }
 
@@ -84,6 +94,37 @@ public class MoonFragment extends Fragment {
             }
         };
         t.start();
+    }
+
+    public void sampleAstroInfo(){
+        moonRiseText= (TextView) view.findViewById(R.id.moonRise);
+        moonSetText = (TextView) view.findViewById(R.id.moonSet);
+        nextNewMoonText = (TextView) view.findViewById(R.id.nextNewMoon);
+        nextFullMoonText = (TextView) view.findViewById(R.id.nextFullMoon);
+        dayMonthText = (TextView) view.findViewById(R.id.dayMonth);
+        illumText = (TextView) view.findViewById(R.id.illumination);
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(51.7, 19.4);
+
+        AstroDateTime astroDateTime = new AstroDateTime();
+        astroDateTime.setDay(16);
+        astroDateTime.setMonth(5);
+        astroDateTime.setYear(2019);
+
+        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
+
+        String sunrise = astroCalculator.getSunInfo().getSunrise().getHour()+ ":" + astroCalculator.getSunInfo().getSunrise().getMinute() + ":" + astroCalculator.getSunInfo().getSunrise().getSecond();
+        String sunset = astroCalculator.getSunInfo().getSunset().getHour()+ ":" + astroCalculator.getSunInfo().getSunset().getMinute() + ":" + astroCalculator.getSunInfo().getSunset().getSecond();
+        String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
+        String twilightEvening = astroCalculator.getSunInfo().getTwilightEvening().toString();
+
+
+        moonRiseText.setText(sunrise);
+        moonSetText.setText(sunset);
+        nextNewMoonText.setText(twilightMorning);
+        nextFullMoonText.setText(twilightEvening);
+        dayMonthText.setText(twilightEvening);
+        illumText.setText(twilightEvening);
     }
 
 
