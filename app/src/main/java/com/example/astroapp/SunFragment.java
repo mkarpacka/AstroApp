@@ -36,7 +36,10 @@ public class SunFragment extends Fragment {
 //
 //    private OnFragmentInteractionListener mListener;
     private TextView timeText;
-    private TextView textView;
+    private TextView sunriseText;
+    private TextView sunsetText;
+    private TextView twilightMorningText;
+    private TextView twilightEveningText;
     private View view;
 
     public SunFragment() {
@@ -92,18 +95,30 @@ public class SunFragment extends Fragment {
     }
 
     public void sampleAstroInfo(){
-        textView = (TextView) view.findViewById(R.id.textView);
+        sunriseText= (TextView) view.findViewById(R.id.sunrise);
+        sunsetText = (TextView) view.findViewById(R.id.sunset);
+        twilightMorningText = (TextView) view.findViewById(R.id.twilightMorning);
+        twilightEveningText = (TextView) view.findViewById(R.id.twilightEvening);
 
-        AstroCalculator.Location astroLoc = new AstroCalculator.Location(-50.0, -15.0);
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(51.7, 19.4);
 
         AstroDateTime astroDateTime = new AstroDateTime();
-        astroDateTime.setDay(24);
-        astroDateTime.setMonth(4);
+        astroDateTime.setDay(16);
+        astroDateTime.setMonth(5);
         astroDateTime.setYear(2019);
 
         AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
 
-        textView.setText(astroCalculator.getSunInfo().getSunrise().toString());
+        String sunrise = astroCalculator.getSunInfo().getSunrise().getHour()+ ":" + astroCalculator.getSunInfo().getSunrise().getMinute() + ":" + astroCalculator.getSunInfo().getSunrise().getSecond();
+        String sunset = astroCalculator.getSunInfo().getSunset().getHour()+ ":" + astroCalculator.getSunInfo().getSunset().getMinute() + ":" + astroCalculator.getSunInfo().getSunset().getSecond();
+        String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
+        String twilightEvening = astroCalculator.getSunInfo().getTwilightEvening().toString();
+
+
+        sunriseText.setText(sunrise);
+        sunsetText.setText(sunset);
+        twilightMorningText.setText(twilightMorning);
+        twilightEveningText.setText(twilightEvening);
     }
 
 //    /**
