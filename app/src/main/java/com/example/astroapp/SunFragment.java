@@ -41,6 +41,7 @@ public class SunFragment extends Fragment {
     private TextView twilightMorningText;
     private TextView twilightEveningText;
     private View view;
+    private String formattedDate;
 
     public SunFragment() {
         // Required empty public constructor
@@ -62,6 +63,50 @@ public class SunFragment extends Fragment {
         startTimeThread();
         sampleAstroInfo();
         return view;
+    }
+
+
+    public void sampleAstroInfo(){
+        sunriseText= (TextView) view.findViewById(R.id.sunrise);
+        sunsetText = (TextView) view.findViewById(R.id.sunset);
+        twilightMorningText = (TextView) view.findViewById(R.id.twilightMorning);
+        twilightEveningText = (TextView) view.findViewById(R.id.twilightEvening);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDate = df.format(c.getTime());
+
+        String [] splitedDate = splitDate();
+        String [] splitedTime = splitTime();
+
+        double latitude = 51.7;
+        double longitude = 19.4;
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
+
+        AstroDateTime astroDateTime = new AstroDateTime();
+        astroDateTime.setDay(Integer.parseInt(splitedDate[2]));
+        astroDateTime.setMonth(Integer.parseInt(splitedDate[1]));
+        astroDateTime.setYear(Integer.parseInt(splitedDate[0]));
+
+        astroDateTime.setHour(Integer.parseInt(splitedTime[0]));
+        astroDateTime.setMinute(Integer.parseInt(splitedTime[1]));
+        astroDateTime.setSecond(Integer.parseInt(splitedTime[2]));
+
+        astroDateTime.setTimezoneOffset(2);
+
+        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
+
+        String sunrise = getPartOfSplitedDate(astroCalculator.getSunInfo().getSunrise().toString(),1);
+        String sunset = getPartOfSplitedDate(astroCalculator.getSunInfo().getSunset().toString(), 1);
+        String twilightMorning = getPartOfSplitedDate(astroCalculator.getSunInfo().getTwilightMorning().toString(), 1);
+        String twilightEvening = getPartOfSplitedDate(astroCalculator.getSunInfo().getTwilightEvening().toString(), 1);
+
+
+        sunriseText.setText(sunrise);
+        sunsetText.setText(sunset);
+        twilightMorningText.setText(twilightMorning);
+        twilightEveningText.setText(twilightEvening);
     }
 
     public void startTimeThread(){
@@ -94,37 +139,39 @@ public class SunFragment extends Fragment {
         t.start();
     }
 
-    public void sampleAstroInfo(){
-        sunriseText= (TextView) view.findViewById(R.id.sunrise);
-        sunsetText = (TextView) view.findViewById(R.id.sunset);
-        twilightMorningText = (TextView) view.findViewById(R.id.twilightMorning);
-        twilightEveningText = (TextView) view.findViewById(R.id.twilightEvening);
+    public String[] splitDateTime(String formattedDate){
 
-        AstroCalculator.Location astroLoc = new AstroCalculator.Location(51.7, 19.4);
+        String [] separateDateTime = formattedDate.split(" ");
 
-        AstroDateTime astroDateTime = new AstroDateTime();
-        astroDateTime.setDay(16);
-        astroDateTime.setMonth(5);
-        astroDateTime.setYear(2019);
+        return separateDateTime;
+    }
 
-        astroDateTime.setHour(16);
-        astroDateTime.setMinute(37);
-        astroDateTime.setSecond(30);
+    public String[] splitTime(){
 
-        astroDateTime.setTimezoneOffset(2);
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateHourMinSec = separateDateTime[1].split(":");
 
-        AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
-
-        String sunrise = astroCalculator.getSunInfo().getSunrise().getHour()+ ":" + astroCalculator.getSunInfo().getSunrise().getMinute() + ":" + astroCalculator.getSunInfo().getSunrise().getSecond();
-        String sunset = astroCalculator.getSunInfo().getSunset().getHour()+ ":" + astroCalculator.getSunInfo().getSunset().getMinute() + ":" + astroCalculator.getSunInfo().getSunset().getSecond();
-        String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
-        String twilightEvening = astroCalculator.getSunInfo().getTwilightEvening().toString();
+//        for(int i=0; i<separateHourMinSec.length; i++){
+//            Log.i("hej", separateHourMinSec[i]);
+//        }
 
 
-        sunriseText.setText(sunrise);
-        sunsetText.setText(sunset);
-        twilightMorningText.setText(twilightMorning);
-        twilightEveningText.setText(twilightEvening);
+        return separateHourMinSec;
+    }
+
+    public String[] splitDate(){
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateYearMonthDay = separateDateTime[0].split("-");
+
+        return separateYearMonthDay;
+    }
+
+    public String getPartOfSplitedDate(String str, int index){
+        String [] tempToFormatDate = splitDateTime(str);
+
+        String returnedString = tempToFormatDate[index];
+
+        return returnedString;
     }
 
 //    /**

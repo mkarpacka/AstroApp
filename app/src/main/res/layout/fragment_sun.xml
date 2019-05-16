@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SunFragment"
-    android:background="#F5E30D"
+    android:background="@android:color/holo_orange_light"
     android:orientation="vertical">
 
 
