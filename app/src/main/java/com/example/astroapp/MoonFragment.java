@@ -50,6 +50,9 @@ public class MoonFragment extends Fragment {
     private View view;
     private String formattedDate;
 
+    double latitude = 51.7;
+    double longitude = 19.4;
+
     public MoonFragment() {
         // Required empty public constructor
     }
@@ -60,14 +63,27 @@ public class MoonFragment extends Fragment {
         fc.replaceFragment(fr);
     }
 
+    private String holder = "";
+    public void setCoordinates(String s){
+            longitude = Double.parseDouble(s);
+            Log.i("hej", Double.toString(longitude));
+        if(coordinatesText != null){
+            coordinatesText.setText(s);
+        }else{
+            holder = s;
+        }
+//            coordinatesText.setText(Double.toString(longitude));
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
-        MoonFragmentListener listener = (MoonFragmentListener) getActivity();
-        listener.onFragmentInteraction(s);
-
+        coordinatesText = (TextView) view.findViewById(R.id.coordinates);
+//        MoonFragmentListener listener = (MoonFragmentListener) getActivity();
+//        listener.onFragmentInteraction(s);
+        coordinatesText.setText(Double.toString(longitude));
         startTimeThread();
         sampleAstroInfo();
         return view;
@@ -119,8 +135,8 @@ public class MoonFragment extends Fragment {
         String [] splitedDate = splitDate();
         String [] splitedTime = splitTime();
 
-        double latitude = 51.7;
-        double longitude = 19.4;
+//        double latitude = 51.7;
+//        double longitude = 19.4;
 
         AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 

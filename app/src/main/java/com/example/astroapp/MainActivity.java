@@ -41,6 +41,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     @Override
     public void onFinishEditDialog(String inputText) {
         Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
+        MoonFragment moonFragment = new MoonFragment();
+        getSupportFragmentManager().beginTransaction().
+                add(R.id.fragment_container, moonFragment).commit();
+        moonFragment.setCoordinates(inputText);
     }
 
     @Override
