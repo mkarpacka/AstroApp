@@ -46,7 +46,8 @@ public class MoonFragment extends Fragment {
     private TextView nextFullMoonText;
     private TextView dayMonthText;
     private TextView illumText;
-    private TextView coordinatesText;
+    private TextView latitudeText;
+    private TextView longitudeText;
     private View view;
     private String formattedDate;
 
@@ -64,15 +65,20 @@ public class MoonFragment extends Fragment {
     }
 
     private String holder = "";
-    public void setCoordinates(String s){
+    public void setCoordinatesLongitude(String s){
             longitude = Double.parseDouble(s);
             Log.i("hej", Double.toString(longitude));
-        if(coordinatesText != null){
-            coordinatesText.setText(s);
-        }else{
-            holder = s;
+        if(longitudeText != null){
+            longitudeText.setText(s);
         }
-//            coordinatesText.setText(Double.toString(longitude));
+    }
+
+    public void setCoordinatesLatitudeText(String s){
+        longitude = Double.parseDouble(s);
+        Log.i("hej", Double.toString(longitude));
+        if(latitudeText != null) {
+            latitudeText.setText(s);
+        }
     }
 
     @Override
@@ -80,10 +86,11 @@ public class MoonFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
-        coordinatesText = (TextView) view.findViewById(R.id.coordinates);
-//        MoonFragmentListener listener = (MoonFragmentListener) getActivity();
-//        listener.onFragmentInteraction(s);
-        coordinatesText.setText(Double.toString(longitude));
+        latitudeText = (TextView) view.findViewById(R.id.latitude);
+        latitudeText.setText(Double.toString(latitude));
+
+        longitudeText = (TextView) view.findViewById(R.id.longitude);
+        longitudeText.setText(Double.toString(longitude));
         startTimeThread();
         sampleAstroInfo();
         return view;
@@ -134,9 +141,6 @@ public class MoonFragment extends Fragment {
 
         String [] splitedDate = splitDate();
         String [] splitedTime = splitTime();
-
-//        double latitude = 51.7;
-//        double longitude = 19.4;
 
         AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 

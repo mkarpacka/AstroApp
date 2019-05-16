@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         MoonFragment moonFragment = new MoonFragment();
         getSupportFragmentManager().beginTransaction().
                 add(R.id.fragment_container, moonFragment).commit();
-        moonFragment.setCoordinates(inputText);
+        moonFragment.setCoordinatesLongitude(inputText);
     }
 
     @Override
