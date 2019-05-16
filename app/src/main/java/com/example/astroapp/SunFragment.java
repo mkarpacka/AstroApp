@@ -115,7 +115,6 @@ public class SunFragment extends Fragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
                         if(getActivity() == null)
                             return;
 
@@ -125,12 +124,13 @@ public class SunFragment extends Fragment {
                                 timeText = (TextView) view.findViewById(R.id.time_place);
 
                                 Calendar c = Calendar.getInstance();
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
                                 String formattedDate = df.format(c.getTime());
 
                                 timeText.setText(formattedDate);
                             }
                         });
+                        Thread.sleep(1000);
                     }
                 } catch (InterruptedException e) {
                 }
