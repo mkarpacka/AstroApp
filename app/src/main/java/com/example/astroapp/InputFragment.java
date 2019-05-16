@@ -8,25 +8,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InputFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link InputFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class InputFragment extends DialogFragment implements TextView.OnEditorActionListener {
+public class InputFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +30,10 @@ public class InputFragment extends DialogFragment implements TextView.OnEditorAc
     private String mParam1;
     private String mParam2;
     private EditText mEditText;
+    private EditText mEditText2;
+    private Button okButton;
+    private Button cancelButton;
+    View view;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -63,38 +61,63 @@ public class InputFragment extends DialogFragment implements TextView.OnEditorAc
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+
+        view = inflater.inflate(R.layout.fragment_blank, container, false);
+        String pass = "";
+
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get field from view
+
         mEditText = (EditText) view.findViewById(R.id.dlugosc);
-        // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Enter Name");
+        mEditText2 = (EditText) view.findViewById(R.id.szerokosc);
+        okButton = (Button) view.findViewById(R.id.ok);
+        cancelButton = (Button) view.findViewById(R.id.cancel);
+
+
+        String title = getArguments().getString("title", "Podaj współrzędne");
         getDialog().setTitle(title);
-        // Show soft keyboard automatically and request focus to field
+
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        mEditText.setOnEditorActionListener(this);
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("hej", "clicked");
+                InputFragmentListener listener = (InputFragmentListener) getActivity();
+                listener.onFinishEditDialog(mEditText.getText().toString());
+                dismiss();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("hej", "clicked");
+                dismiss();
+            }
+        });
 
     }
 
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text back to activity through the implemented listener
-            InputFragmentListener listener = (InputFragmentListener) getActivity();
-            listener.onFinishEditDialog(mEditText.getText().toString());
-            // Close the dialog and return back to the parent activity
-            dismiss();
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//        if (EditorInfo.IME_ACTION_DONE == actionId) {
+//            // Return input text back to activity through the implemented listener
+//            InputFragmentListener listener = (InputFragmentListener) getActivity();
+//            listener.onFinishEditDialog(mEditText.getText().toString());
+//            // Close the dialog and return back to the parent activity
+//            dismiss();
+//            return true;
+//        }
+//        return false;
+//    }
 
 
     public interface InputFragmentListener {
@@ -103,39 +126,6 @@ public class InputFragment extends DialogFragment implements TextView.OnEditorAc
 
 
 
-//    public void createAlertDialog(){
-//
-//        String pass = "";
-//
-//        // get prompts.xml view
-//        LayoutInflater layoutInflater = LayoutInflater.from();
-//        View promptView = layoutInflater.inflate(R.layout.fragment_blank, null);
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-//        alertDialogBuilder.setView(promptView);
-//
-//        EditText dlugosc = (EditText) promptView.findViewById(R.id.dlugosc);
-//        EditText szerokosc = (EditText) promptView.findViewById(R.id.szerokosc);
-//
-//        alertDialogBuilder.setTitle("Set localization");
-//        alertDialogBuilder.setCancelable(false)
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//
-//                        dialog.cancel();
-//                    }
-//                })
-//                .setNegativeButton("Cancel",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//
-//        // create an alert dialog
-//        AlertDialog alert = alertDialogBuilder.create();
-//        alert.show();
-//
-//    }
 
 
 //    // TODO: Rename method, update argument and hook method into UI event
