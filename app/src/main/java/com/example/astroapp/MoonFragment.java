@@ -47,6 +47,7 @@ public class MoonFragment extends Fragment {
     private TextView dayMonthText;
     private TextView illumText;
     private View view;
+    private String formattedDate;
 
     public MoonFragment() {
         // Required empty public constructor
@@ -107,25 +108,36 @@ public class MoonFragment extends Fragment {
         dayMonthText = (TextView) view.findViewById(R.id.dayMonth);
         illumText = (TextView) view.findViewById(R.id.illumination);
 
-        AstroCalculator.Location astroLoc = new AstroCalculator.Location(51.7, 19.4);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDate = df.format(c.getTime());
+
+        String [] splitedDate = splitDate();
+        String [] splitedTime = splitTime();
+
+        double latitude = 51.7;
+        double longitude = 19.4;
+
+        AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 
         AstroDateTime astroDateTime = new AstroDateTime();
-        astroDateTime.setDay(16);
-        astroDateTime.setMonth(5);
-        astroDateTime.setYear(2019);
+        astroDateTime.setDay(Integer.parseInt(splitedDate[2]));
+        astroDateTime.setMonth(Integer.parseInt(splitedDate[1]));
+        astroDateTime.setYear(Integer.parseInt(splitedDate[0]));
 
-        astroDateTime.setHour(16);
-        astroDateTime.setMinute(37);
-        astroDateTime.setSecond(30);
+        astroDateTime.setHour(Integer.parseInt(splitedTime[0]));
+        astroDateTime.setMinute(Integer.parseInt(splitedTime[1]));
+        astroDateTime.setSecond(Integer.parseInt(splitedTime[2]));
 
         astroDateTime.setTimezoneOffset(2);
 
         AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
 
-        String moonRise = astroCalculator.getMoonInfo().getMoonrise().toString();
-        String moonSet = astroCalculator.getMoonInfo().getMoonset().toString();
-        String nextNewMoon = astroCalculator.getMoonInfo().getNextNewMoon().toString();
-        String nextFullMoon = astroCalculator.getMoonInfo().getNextFullMoon().toString();
+
+        String moonRise = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonrise().toString(), 1);
+        String moonSet = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonset().toString(), 1);
+        String nextNewMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 1);
+        String nextFullMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 1);
         String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge());
         String illumination = Double.toString(astroCalculator.getMoonInfo().getIllumination()*100).substring(0,4) +"%";
 
@@ -138,10 +150,7 @@ public class MoonFragment extends Fragment {
         illumText.setText(illumination);
     }
 
-    public String[] splitDateTime(){
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String formattedDate = df.format(c.getTime());
+    public String[] splitDateTime(String formattedDate){
 
         String [] separateDateTime = formattedDate.split(" ");
 
@@ -150,17 +159,30 @@ public class MoonFragment extends Fragment {
 
     public String[] splitTime(){
 
-        String [] separateDateTime = splitDateTime();
+        String [] separateDateTime = splitDateTime(formattedDate);
         String [] separateHourMinSec = separateDateTime[1].split(":");
+
+//        for(int i=0; i<separateHourMinSec.length; i++){
+//            Log.i("hej", separateHourMinSec[i]);
+//        }
+
 
         return separateHourMinSec;
     }
 
     public String[] splitDate(){
-        String [] separateDateTime = splitDateTime();
-        String [] separateYearMonthDay = separateDateTime[0].split(".");
+        String [] separateDateTime = splitDateTime(formattedDate);
+        String [] separateYearMonthDay = separateDateTime[0].split("-");
 
         return separateYearMonthDay;
+    }
+
+    public String getPartOfSplitedDate(String str, int index){
+        String [] tempToFormatDate = splitDateTime(str);
+
+        String returnedString = tempToFormatDate[index];
+
+        return returnedString;
     }
 
 //
