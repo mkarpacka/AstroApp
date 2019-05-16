@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -111,22 +114,54 @@ public class MoonFragment extends Fragment {
         astroDateTime.setMonth(5);
         astroDateTime.setYear(2019);
 
+        astroDateTime.setHour(16);
+        astroDateTime.setMinute(37);
+        astroDateTime.setSecond(30);
+
+        astroDateTime.setTimezoneOffset(2);
+
         AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
 
-        String sunrise = astroCalculator.getSunInfo().getSunrise().getHour()+ ":" + astroCalculator.getSunInfo().getSunrise().getMinute() + ":" + astroCalculator.getSunInfo().getSunrise().getSecond();
-        String sunset = astroCalculator.getSunInfo().getSunset().getHour()+ ":" + astroCalculator.getSunInfo().getSunset().getMinute() + ":" + astroCalculator.getSunInfo().getSunset().getSecond();
-        String twilightMorning = astroCalculator.getSunInfo().getTwilightMorning().toString();
-        String twilightEvening = astroCalculator.getSunInfo().getTwilightEvening().toString();
+        String moonRise = astroCalculator.getMoonInfo().getMoonrise().toString();
+        String moonSet = astroCalculator.getMoonInfo().getMoonset().toString();
+        String nextNewMoon = astroCalculator.getMoonInfo().getNextNewMoon().toString();
+        String nextFullMoon = astroCalculator.getMoonInfo().getNextFullMoon().toString();
+        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge());
+        String illumination = Double.toString(astroCalculator.getMoonInfo().getIllumination()*100).substring(0,4) +"%";
 
 
-        moonRiseText.setText(sunrise);
-        moonSetText.setText(sunset);
-        nextNewMoonText.setText(twilightMorning);
-        nextFullMoonText.setText(twilightEvening);
-        dayMonthText.setText(twilightEvening);
-        illumText.setText(twilightEvening);
+        moonRiseText.setText(moonRise);
+        moonSetText.setText(moonSet);
+        nextNewMoonText.setText(nextNewMoon);
+        nextFullMoonText.setText(nextFullMoon);
+        dayMonthText.setText(dayMonth);
+        illumText.setText(illumination);
     }
 
+    public String[] splitDateTime(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        String [] separateDateTime = formattedDate.split(" ");
+
+        return separateDateTime;
+    }
+
+    public String[] splitTime(){
+
+        String [] separateDateTime = splitDateTime();
+        String [] separateHourMinSec = separateDateTime[1].split(":");
+
+        return separateHourMinSec;
+    }
+
+    public String[] splitDate(){
+        String [] separateDateTime = splitDateTime();
+        String [] separateYearMonthDay = separateDateTime[0].split(".");
+
+        return separateYearMonthDay;
+    }
 
 //
 //    /**

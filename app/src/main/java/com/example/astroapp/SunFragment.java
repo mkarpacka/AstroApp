@@ -107,6 +107,12 @@ public class SunFragment extends Fragment {
         astroDateTime.setMonth(5);
         astroDateTime.setYear(2019);
 
+        astroDateTime.setHour(16);
+        astroDateTime.setMinute(37);
+        astroDateTime.setSecond(30);
+
+        astroDateTime.setTimezoneOffset(2);
+
         AstroCalculator astroCalculator = new AstroCalculator(astroDateTime, astroLoc);
 
         String sunrise = astroCalculator.getSunInfo().getSunrise().getHour()+ ":" + astroCalculator.getSunInfo().getSunrise().getMinute() + ":" + astroCalculator.getSunInfo().getSunrise().getSecond();
