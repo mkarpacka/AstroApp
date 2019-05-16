@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnCount="1"
-        android:rowCount="1">
+        android:rowCount="2">
 
 
 
@@ -52,6 +52,12 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill"
         tools:ignore="MissingConstraints" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container2"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/holo_blue_bright" />
 
     </GridLayout>
 

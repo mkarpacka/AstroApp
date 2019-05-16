@@ -1,12 +1,15 @@
 package com.example.astroapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -43,12 +46,12 @@ public class SunFragment extends Fragment {
     private View view;
     private String formattedDate;
 
+
     public SunFragment() {
         // Required empty public constructor
     }
 
-    public void showOtherFragment()
-    {
+    public void showOtherFragment() {
         Fragment fr=new MoonFragment();
         FragmentChangeListener fc=(FragmentChangeListener)getActivity();
         fc.replaceFragment(fr);
