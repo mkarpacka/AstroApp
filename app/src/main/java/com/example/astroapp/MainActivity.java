@@ -87,7 +87,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
             // get prompts.xml view
             LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            View promptView = layoutInflater.inflate(R.layout.localization_input, null);
+            View promptView = layoutInflater.inflate(R.layout.fragment_blank, null);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
             alertDialogBuilder.setView(promptView);
 
