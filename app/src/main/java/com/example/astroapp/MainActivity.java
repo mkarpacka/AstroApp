@@ -19,16 +19,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends FragmentActivity implements FragmentChangeListener{
+public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
     private final FragmentManager fm = getSupportFragmentManager();
     private Fragment sunFragment;
     private Fragment moonFragment;
+    private Fragment inputFragment;
     private Button button;
     private Button localButton;
     private Button button2;
     private TextView timeText;
     String m_Text="";
 //    final FragmentTransaction ft = this.fm.beginTransaction();
+
+    private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        InputFragment editNameDialogFragment = InputFragment.newInstance("Some Title");
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(this, "Hi, " + inputText, Toast.LENGTH_SHORT).show();
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         sunFragment = new SunFragment();
         moonFragment = new MoonFragment();
+        inputFragment = new InputFragment();
 
 
         button = (Button) findViewById(R.id.fragment_sun_button);
@@ -64,7 +79,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         localButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAlertDialog();
+                showEditDialog();
             }
 
         });
@@ -79,40 +94,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         fragmentTransaction.replace(R.id.fragment_container, fragment);
 //        fragmentTransaction.addToBackStack(fragment.toString());
         fragmentTransaction.commit();
-    }
-
-    public void createAlertDialog(){
-
-        String pass = "";
-
-            // get prompts.xml view
-            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            View promptView = layoutInflater.inflate(R.layout.fragment_blank, null);
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-            alertDialogBuilder.setView(promptView);
-
-            EditText dlugosc = (EditText) promptView.findViewById(R.id.dlugosc);
-            EditText szerokosc = (EditText) promptView.findViewById(R.id.szerokosc);
-
-            alertDialogBuilder.setTitle("Set localization");
-            alertDialogBuilder.setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            dialog.cancel();
-                        }
-                    })
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-            // create an alert dialog
-            AlertDialog alert = alertDialogBuilder.create();
-            alert.show();
-
     }
 
 
