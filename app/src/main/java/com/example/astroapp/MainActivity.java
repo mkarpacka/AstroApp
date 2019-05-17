@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener, MoonFragment.MoonFragmentListener {
+public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
     private final FragmentManager fm = getSupportFragmentManager();
     private Fragment sunFragment;
     private Fragment moonFragment;
@@ -57,10 +57,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
     }
 
-    @Override
-    public void onFragmentInteraction(String s) {
-        Toast.makeText(this, "Hi, " + s, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onFragmentInteraction(String s) {
+//        Toast.makeText(this, "Hi, " + s, Toast.LENGTH_SHORT).show();
+//    }
 
 
     @Override

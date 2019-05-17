@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,6 +52,8 @@ public class SunFragment extends Fragment {
 
     double latitude = 51.7;
     double longitude = 19.4;
+
+    Thread t;
 
     public SunFragment() {
         // Required empty public constructor
@@ -138,7 +141,7 @@ public class SunFragment extends Fragment {
     }
 
     public void startTimeThread(){
-        Thread t = new Thread() {
+        t = new Thread() {
             @Override
             public void run() {
                 try {
@@ -156,6 +159,7 @@ public class SunFragment extends Fragment {
                                 String formattedDate = df.format(c.getTime());
 
                                 timeText.setText(formattedDate);
+//                                Toast.makeText(getContext(),"godzina zmieniona", Toast.LENGTH_SHORT).show();
                             }
                         });
                         Thread.sleep(1000);
@@ -248,12 +252,13 @@ public class SunFragment extends Fragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        t.isInterrupted();
+
+    }
 //
 //    /**
 //     * This interface must be implemented by activities that contain this

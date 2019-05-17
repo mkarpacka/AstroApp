@@ -51,6 +51,8 @@ public class MoonFragment extends Fragment {
     private View view;
     private String formattedDate;
 
+    Thread t;
+
     double latitude = 51.7;
     double longitude = 19.4;
 
@@ -97,7 +99,7 @@ public class MoonFragment extends Fragment {
     }
 
     public void startTimeThread(){
-        Thread t = new Thread() {
+        t = new Thread() {
             @Override
             public void run() {
                 try {
@@ -162,7 +164,7 @@ public class MoonFragment extends Fragment {
         String moonSet = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonset().toString(), 1);
         String nextNewMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 1);
         String nextFullMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 1);
-        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge());
+        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge()).substring(0,4);
         String illumination = Double.toString(astroCalculator.getMoonInfo().getIllumination()*100).substring(0,4) +"%";
 
 
@@ -205,12 +207,17 @@ public class MoonFragment extends Fragment {
         return returnedString;
     }
 
-    String s = "50";
+//    String s = "50";
+//
+//    public interface MoonFragmentListener {
+//        void onFragmentInteraction(String s);
+//    }
 
-    public interface MoonFragmentListener {
-        void onFragmentInteraction(String s);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        t.isInterrupted();
     }
-
 //
 //    /**
 //     * Use this factory method to create a new instance of
@@ -264,11 +271,7 @@ public class MoonFragment extends Fragment {
 //        }
 //    }
 //
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+
 //
 //    /**
 //     * This interface must be implemented by activities that contain this
