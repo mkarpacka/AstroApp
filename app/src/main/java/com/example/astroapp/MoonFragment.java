@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
@@ -51,43 +52,57 @@ public class MoonFragment extends Fragment {
     private View view;
     private String formattedDate;
 
+    Context context1;
     Thread t;
 
     double latitude = 51.7;
     double longitude = 19.4;
 
+    double temp1;
+    double temp2;
+
     public MoonFragment() {
         // Required empty public constructor
     }
-    public void showOtherFragment()
-    {
-        Fragment fr=new SunFragment();
-        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
-        fc.replaceFragment(fr);
-    }
 
-    private String holder = "";
-    public void setCoordinatesLongitude(String s){
+    public void setCoordinates(String s, String s2){
+
+        try{
             longitude = Double.parseDouble(s);
-            Log.i("hej", Double.toString(longitude));
-        if(longitudeText != null){
-            longitudeText.setText(s);
+            latitude = Double.parseDouble(s2);
+        }catch (Exception e){
+            makeErrorToast();
+        }
+
+        boolean check = checkValueOfCoordinates();
+        if(longitudeText != null && latitudeText != null && check){
+            longitudeText.setText(Double.toString(longitude));
+            latitudeText.setText(Double.toString(latitude));
+        }
+
+    }
+
+
+    public void makeErrorToast(){
+        if(view != null){
+            Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void setCoordinatesLatitudeText(String s){
-        latitude = Double.parseDouble(s);
-        Log.i("hej", Double.toString(latitude));
-        if(latitudeText != null) {
-            latitudeText.setText(s);
-        }
+    public boolean checkValueOfCoordinates(){
+        if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
+            return true;
+        }else return false;
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
+        context1 = container.getContext();
         latitudeText = (TextView) view.findViewById(R.id.latitude);
         latitudeText.setText(Double.toString(latitude));
 
@@ -260,16 +275,20 @@ public class MoonFragment extends Fragment {
 //        }
 //    }
 //
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        Toast.makeText(context,"Asda",Toast.LENGTH_LONG).show();
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnFragmentInteractionListener");
 //        }
-//    }
+//        context1 = context;
+    }
 //
 
 //

@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class InputFragment extends DialogFragment {
@@ -77,6 +78,8 @@ public class InputFragment extends DialogFragment {
         cancelButton = (Button) view.findViewById(R.id.cancel);
 
 
+
+
         String title = getArguments().getString("title", "Podaj współrzędne");
         getDialog().setTitle(title);
 
@@ -89,9 +92,10 @@ public class InputFragment extends DialogFragment {
             public void onClick(View v) {
                 Log.i("hej", "clicked");
                 InputFragmentListener listener = (InputFragmentListener) getActivity();
-                listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
-                listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
-                dismiss();
+                    listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
+                    listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
+//                    Toast.makeText(getContext(), "Zaktualizowano ustawienia", Toast.LENGTH_SHORT).show();
+                    dismiss();
             }
         });
 

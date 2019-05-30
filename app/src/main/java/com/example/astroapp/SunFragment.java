@@ -59,27 +59,34 @@ public class SunFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void showOtherFragment() {
-        Fragment fr=new MoonFragment();
-        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
-        fc.replaceFragment(fr);
+
+    public void setCoordinates(String s, String s2){
+
+        try{
+            longitude = Double.parseDouble(s);
+            latitude = Double.parseDouble(s2);
+        }catch (Exception e){
+//            makeErrorToast();
+        }
+
+        boolean check = checkValueOfCoordinates();
+        if(longitudeText != null && latitudeText != null && check){
+            longitudeText.setText(Double.toString(longitude));
+            latitudeText.setText(Double.toString(latitude));
+        }
+
     }
 
-    private String holder = "";
-    public void setCoordinatesLongitude(String s){
-        longitude = Double.parseDouble(s);
-        Log.i("hej", Double.toString(longitude));
-        if(longitudeText != null){
-            longitudeText.setText(s);
-        }
-    }
+//    public void makeErrorToast(){
+//        if(view != null){
+//            Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-    public void setCoordinatesLatitudeText(String s){
-        latitude = Double.parseDouble(s);
-        Log.i("hej", Double.toString(latitude));
-        if(latitudeText != null) {
-            latitudeText.setText(s);
-        }
+    public boolean checkValueOfCoordinates(){
+        if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
+            return true;
+        }else return false;
     }
 
     @Override

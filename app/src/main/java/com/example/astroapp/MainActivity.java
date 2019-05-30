@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
     private final FragmentManager fm = getSupportFragmentManager();
-    private Fragment sunFragment;
-    private Fragment moonFragment;
+    private SunFragment sunFragment;
+    private MoonFragment moonFragment;
     private Fragment inputFragment;
     private Button button;
     private Button localButton;
@@ -37,30 +37,40 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     }
 
     @Override
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+//        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
+    }
+
+    @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
-        Toast.makeText(this, "Zaktualizowano ustawienia", Toast.LENGTH_SHORT).show();
-        moonFragment = new MoonFragment();
 
-        ((MoonFragment) moonFragment).setCoordinatesLatitudeText(inputText);
-        ((MoonFragment) moonFragment).setCoordinatesLongitude(inputText2);
+//        moonFragment = new MoonFragment();
 
-        replaceFragment(moonFragment);
+        if(inputText != null && inputText2 != null){
+            moonFragment.setCoordinates(inputText, inputText2);
+            replaceFragment(moonFragment);
+        }else Toast.makeText(this, "Podano złe dane", Toast.LENGTH_SHORT).show();
+
+
+
+
     }
 
     @Override
     public void onFinish(String inputText, String inputText2) {
-        sunFragment = new SunFragment();
-        ((SunFragment) sunFragment).setCoordinatesLatitudeText(inputText);
-        ((SunFragment) sunFragment).setCoordinatesLongitude(inputText2);
 
-        replaceFragment(sunFragment);
+        if(inputText != null && inputText2 != null){
+            sunFragment.setCoordinates(inputText, inputText2);
+//            sunFragment.setCoordinatesLongitude(inputText2);
+            replaceFragment(sunFragment);
+        }else Toast.makeText(this, "Podano złe dane", Toast.LENGTH_SHORT).show();
 
     }
 
-//    @Override
-//    public void onFragmentInteraction(String s) {
-//        Toast.makeText(this, "Hi, " + s, Toast.LENGTH_SHORT).show();
-//    }
 
 
     @Override
@@ -73,28 +83,41 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         inputFragment = new InputFragment();
 
 
-        button = (Button) findViewById(R.id.fragment_sun_button);
-        button2 = (Button) findViewById(R.id.fragment_moon_button);
 
         localButton = findViewById(R.id.set_localization_button);
 
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
+            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
+//        fragmentTransaction.addToBackStack(fragment.toString());
+            fragmentTransaction.commit();
+        } else {
+            replaceFragment(sunFragment);
+
+
+            button = (Button) findViewById(R.id.fragment_sun_button);
+            button2 = (Button) findViewById(R.id.fragment_moon_button);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    replaceFragment(sunFragment);
+                }
+            });
+            button2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    replaceFragment(moonFragment);
+                }
+
+            });
+        }
 
 //        startTimeThread();
-        replaceFragment(sunFragment);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(sunFragment);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(moonFragment);
-            }
-
-        });
         localButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,14 +129,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
     }
 
-    @Override
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-//        fragmentTransaction.addToBackStack(fragment.toString());
-        fragmentTransaction.commit();
-    }
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -131,11 +147,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        ((SunFragment) sunFragment).setCoordinatesLatitudeText(Double.toString(savedInstanceState.getDouble("s1")));
-        ((SunFragment) sunFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s2")));
+        ((SunFragment) sunFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s1")), Double.toString(savedInstanceState.getDouble("s2")));
+//        ((SunFragment) sunFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s2")));
 
-        ((MoonFragment) moonFragment).setCoordinatesLatitudeText(Double.toString(savedInstanceState.getDouble("s3")));
-        ((MoonFragment) moonFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s4")));
+        ((MoonFragment) moonFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s3")), Double.toString(savedInstanceState.getDouble("s4")));
+//        ((MoonFragment) moonFragment).setCoordinatesLongitude(Double.toString(savedInstanceState.getDouble("s4")));
     }
 
 }
