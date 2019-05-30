@@ -96,11 +96,12 @@ public class InputFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
-                    case 0: newRefreshRate = 5; break;
-                    case 1: newRefreshRate = 15; break;
-                    case 2: newRefreshRate = 60; break;
-                    case 3: newRefreshRate = 300; break;
+                    case 0: newRefreshRate = 5000; break;
+                    case 1: newRefreshRate = 15000; break;
+                    case 2: newRefreshRate = 60000; break;
+                    case 3: newRefreshRate = 300000; break;
                 }
+
             }
 
             @Override
@@ -124,6 +125,8 @@ public class InputFragment extends DialogFragment {
                 if(listener!=null){
                     listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
                     listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
+                    listener.setRefreshFrequency(newRefreshRate);
+                    Log.i("hej", Integer.toString(newRefreshRate));
                 }
 
                 dismiss();
@@ -158,6 +161,7 @@ public class InputFragment extends DialogFragment {
     public interface InputFragmentListener {
         void onFinishEditDialog(String inputText, String inputText2);
         void onFinish(String inputText, String inputText2);
+        void setRefreshFrequency(int time);
     }
 
 

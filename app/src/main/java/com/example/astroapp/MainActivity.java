@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
         inputFragment = InputFragment.newInstance("Ustawienia lokalizacji");
-//        inputFragment.setOnHeadlineSelectedListener(this);
+
         inputFragment.show(fm, "fragment_edit_name");
     }
 
@@ -43,53 +43,33 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
-//        fragmentTransaction.addToBackStack("moon");
+
         fragmentTransaction.commit();
         Log.i("hej", "replaced");
     }
 
-    public void refreshFragmentSun(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Log.i("hej", "refresh");
-//        fragmentTransaction.detach(moonFragment).attach(moonFragment).commit();
-        fragmentTransaction.detach(sunFragment).attach(sunFragment).commit();
 
-    }
-
-    public void refreshFragmentMoon(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.detach(moonFragment).attach(moonFragment).commit();
-//        fragmentTransaction.detach(sunFragment).attach(sunFragment).commit();
-
-    }
 
     @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
         if(inputText != null && inputText2 != null){
             moonFragment.setCoordinates(inputText, inputText2);
-            replaceFragment(sunFragment);
-//            refreshFragmentMoon();
-//            refreshFragmentSun();
-//            replaceFragment(moonFragment);
         }
     }
+
 
     @Override
     public void onFinish(String inputText, String inputText2) {
         if(inputText != null && inputText2 != null){
             sunFragment.setCoordinates(inputText, inputText2);
-
-            replaceFragment(moonFragment);
-//            replaceFragment(sunFragment); // nie dziala drugie replace
-//            refreshFragmentSun();
-//            refreshFragmentMoon();
-
         }
     }
 
+    @Override
+    public void setRefreshFrequency(int time) {
+        sunFragment.refresh(time);
+        moonFragment.refresh(time);
+    }
 
 
     @Override

@@ -54,6 +54,7 @@ public class SunFragment extends Fragment {
     double longitude = 19.4;
 
     Thread t;
+    Thread t2;
 
     public SunFragment() {
         // Required empty public constructor
@@ -78,11 +79,32 @@ public class SunFragment extends Fragment {
 
     }
 
-//    public void makeErrorToast(){
-//        if(view != null){
-//            Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    public void refresh(final int refreshTime){
+        t2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        if(getActivity() == null)
+                            return;
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                longitudeText.setText(Double.toString(longitude));
+                                latitudeText.setText(Double.toString(latitude));
+                                sampleAstroInfo();
+                                Toast.makeText(getContext(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Thread.sleep(refreshTime);
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t2.start();
+    }
 
     public boolean checkValueOfCoordinates(){
         if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
@@ -264,6 +286,7 @@ public class SunFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         t.isInterrupted();
+//        t2.isInterrupted();
 
     }
 //

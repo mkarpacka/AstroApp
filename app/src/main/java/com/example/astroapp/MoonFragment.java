@@ -92,7 +92,10 @@ public class MoonFragment extends Fragment {
     }
 
 
-    public void refresh(final int refreshTime){
+    public void refresh(int refTime){
+
+            final int refreshTime = refTime;
+
         t2 = new Thread() {
             @Override
             public void run() {
@@ -104,6 +107,8 @@ public class MoonFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                longitudeText.setText(Double.toString(longitude));
+                                latitudeText.setText(Double.toString(latitude));
                                 sampleAstroInfo();
                                 Toast.makeText(getContext(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
                             }
@@ -122,7 +127,7 @@ public class MoonFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
-        context1 = container.getContext();
+//        context1 = container.getContext();
         latitudeText = (TextView) view.findViewById(R.id.latitude);
         latitudeText.setText(Double.toString(latitude));
 
@@ -130,7 +135,7 @@ public class MoonFragment extends Fragment {
         longitudeText.setText(Double.toString(longitude));
         startTimeThread();
 //        sampleAstroInfo();
-        refresh(5000);
+        refresh(10000);
         return view;
     }
 
@@ -243,9 +248,9 @@ public class MoonFragment extends Fragment {
         return returnedString;
     }
 
-//    public interface MoonFragmentListener {
-//        void onFragmentInteraction(String s);
-//    }
+    public interface MoonFragmentListener {
+        void onFragmentInteraction(String s);
+    }
 
     @Override
     public void onDetach() {
