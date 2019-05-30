@@ -15,26 +15,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class InputFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Zabezpieczenie wpisywanych danych, layouty na tablet i horyzontalny na telefon, refresh, zapamiętywanie przy obracaniu
+    // TODO:  layouty na tablet i horyzontalny na telefon, refresh
     private String mParam1;
     private String mParam2;
     private EditText mEditText;
     private EditText mEditText2;
     private Button okButton;
     private Button cancelButton;
+    private Spinner spinner;
     View view;
+    private InputFragmentListener listener;
+    int newRefreshRate;
+    private List<String> options = Arrays.asList("5 Sekund", "15 Sekund", "Minuta", "5 Minut");
 
-//    private OnFragmentInteractionListener mListener;
+
+    public void setOnHeadlineSelectedListener(InputFragmentListener callback) {
+        this.listener = callback;
+    }
+
 
     public InputFragment() {
     }
@@ -48,22 +63,20 @@ public class InputFragment extends DialogFragment {
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_blank, container, false);
-        String pass = "";
-
 
         return view;
     }
@@ -76,9 +89,26 @@ public class InputFragment extends DialogFragment {
         mEditText2 = (EditText) view.findViewById(R.id.szerokosc);
         okButton = (Button) view.findViewById(R.id.ok);
         cancelButton = (Button) view.findViewById(R.id.cancel);
+        spinner = view.findViewById(R.id.settingsSpinner);
 
+        spinner.setAdapter(new ArrayAdapter<String>(view.getContext(), R.layout.support_simple_spinner_dropdown_item, options));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0: newRefreshRate = 5; break;
+                    case 1: newRefreshRate = 15; break;
+                    case 2: newRefreshRate = 60; break;
+                    case 3: newRefreshRate = 300; break;
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+
+        });
 
         String title = getArguments().getString("title", "Podaj współrzędne");
         getDialog().setTitle(title);
@@ -90,24 +120,26 @@ public class InputFragment extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("hej", "clicked");
-                InputFragmentListener listener = (InputFragmentListener) getActivity();
+//                listener = (InputFragmentListener) getActivity();
+                if(listener!=null){
                     listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
                     listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
-//                    Toast.makeText(getContext(), "Zaktualizowano ustawienia", Toast.LENGTH_SHORT).show();
-                    dismiss();
+                }
+
+                dismiss();
             }
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("hej", "clicked");
+
                 dismiss();
             }
         });
 
     }
+
 
 //    @Override
 //    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -139,22 +171,22 @@ public class InputFragment extends DialogFragment {
 //        }
 //    }
 //
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof InputFragmentListener) {
+            listener = (InputFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
 //
 //    /**
 //     * This interface must be implemented by activities that contain this

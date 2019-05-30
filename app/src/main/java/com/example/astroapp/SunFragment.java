@@ -60,6 +60,7 @@ public class SunFragment extends Fragment {
     }
 
 
+
     public void setCoordinates(String s, String s2){
 
         try{
@@ -166,7 +167,6 @@ public class SunFragment extends Fragment {
                                 String formattedDate = df.format(c.getTime());
 
                                 timeText.setText(formattedDate);
-//                                Toast.makeText(getContext(),"godzina zmieniona", Toast.LENGTH_SHORT).show();
                             }
                         });
                         Thread.sleep(1000);
@@ -249,16 +249,16 @@ public class SunFragment extends Fragment {
 //        }
 //    }
 //
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnFragmentInteractionListener");
 //        }
-//    }
+    }
 
     @Override
     public void onDetach() {

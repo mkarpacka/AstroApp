@@ -54,12 +54,11 @@ public class MoonFragment extends Fragment {
 
     Context context1;
     Thread t;
+    Thread t2;
 
     double latitude = 51.7;
     double longitude = 19.4;
 
-    double temp1;
-    double temp2;
 
     public MoonFragment() {
         // Required empty public constructor
@@ -71,23 +70,20 @@ public class MoonFragment extends Fragment {
             longitude = Double.parseDouble(s);
             latitude = Double.parseDouble(s2);
         }catch (Exception e){
-            makeErrorToast();
+            if(view != null){
+                Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
+            }
         }
 
         boolean check = checkValueOfCoordinates();
         if(longitudeText != null && latitudeText != null && check){
             longitudeText.setText(Double.toString(longitude));
             latitudeText.setText(Double.toString(latitude));
+
         }
 
     }
 
-
-    public void makeErrorToast(){
-        if(view != null){
-            Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public boolean checkValueOfCoordinates(){
         if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
@@ -96,6 +92,30 @@ public class MoonFragment extends Fragment {
     }
 
 
+    public void refresh(final int refreshTime){
+        t2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        if(getActivity() == null)
+                            return;
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sampleAstroInfo();
+                                Toast.makeText(getContext(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Thread.sleep(refreshTime);
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t2.start();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,7 +129,8 @@ public class MoonFragment extends Fragment {
         longitudeText = (TextView) view.findViewById(R.id.longitude);
         longitudeText.setText(Double.toString(longitude));
         startTimeThread();
-        sampleAstroInfo();
+//        sampleAstroInfo();
+        refresh(5000);
         return view;
     }
 
@@ -222,8 +243,6 @@ public class MoonFragment extends Fragment {
         return returnedString;
     }
 
-//    String s = "50";
-//
 //    public interface MoonFragmentListener {
 //        void onFragmentInteraction(String s);
 //    }
@@ -232,6 +251,7 @@ public class MoonFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         t.isInterrupted();
+        t2.isInterrupted();
     }
 //
 //    /**
