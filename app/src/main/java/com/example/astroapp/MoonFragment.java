@@ -47,8 +47,8 @@ public class MoonFragment extends Fragment {
     private TextView nextFullMoonText;
     private TextView dayMonthText;
     private TextView illumText;
-    private TextView latitudeText;
-    private TextView longitudeText;
+    TextView latitudeText;
+    TextView longitudeText;
     private View view;
     private String formattedDate;
 
@@ -59,6 +59,7 @@ public class MoonFragment extends Fragment {
     double latitude = 51.7;
     double longitude = 19.4;
 
+    int refreshTimeToSafe=5000;
 
     public MoonFragment() {
         // Required empty public constructor
@@ -94,7 +95,8 @@ public class MoonFragment extends Fragment {
 
     public void refresh(int refTime){
 
-            final int refreshTime = refTime;
+        refreshTimeToSafe = refTime;
+        final int refreshTime = refreshTimeToSafe;
 
         t2 = new Thread() {
             @Override
@@ -110,7 +112,10 @@ public class MoonFragment extends Fragment {
                                 longitudeText.setText(Double.toString(longitude));
                                 latitudeText.setText(Double.toString(latitude));
                                 sampleAstroInfo();
-                                Toast.makeText(getContext(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                                if(getActivity()!=null){
+                                    Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         });
                         Thread.sleep(refreshTime);

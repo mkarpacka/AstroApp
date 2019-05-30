@@ -135,9 +135,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         savedInstanceState.putDouble("s1", ((SunFragment) sunFragment).latitude);
         savedInstanceState.putDouble("s2", ((SunFragment) sunFragment).longitude);
+        savedInstanceState.putInt("i1", sunFragment.refreshTimeToSafe);
 
         savedInstanceState.putDouble("s3", ((MoonFragment) moonFragment).latitude);
         savedInstanceState.putDouble("s4", ((MoonFragment) moonFragment).longitude);
+        savedInstanceState.putInt("i2", moonFragment.refreshTimeToSafe);
 
     }
 
@@ -145,8 +147,23 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        ((SunFragment) sunFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s1")), Double.toString(savedInstanceState.getDouble("s2")));
-        ((MoonFragment) moonFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s3")), Double.toString(savedInstanceState.getDouble("s4")));
+//        ((SunFragment) sunFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s1")), Double.toString(savedInstanceState.getDouble("s2")));
+//        ((MoonFragment) moonFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s3")), Double.toString(savedInstanceState.getDouble("s4")));
+//
+        sunFragment.latitude = savedInstanceState.getDouble("s1");
+        sunFragment.longitude = savedInstanceState.getDouble("s2");
+
+        sunFragment.longitudeText.setText(Double.toString(sunFragment.longitude));
+        sunFragment.latitudeText.setText(Double.toString(sunFragment.latitude));
+
+        moonFragment.latitude = savedInstanceState.getDouble("s3");
+        moonFragment.longitude = savedInstanceState.getDouble("s4");
+
+//        moonFragment.longitudeText.setText(Double.toString(moonFragment.longitude));
+//        moonFragment.latitudeText.setText(Double.toString(moonFragment.latitude));
+
+        moonFragment.refreshTimeToSafe = savedInstanceState.getInt("i2");
+        sunFragment.refreshTimeToSafe = savedInstanceState.getInt("i1");
     }
 
 }

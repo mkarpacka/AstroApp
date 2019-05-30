@@ -45,13 +45,15 @@ public class SunFragment extends Fragment {
     private TextView sunsetText;
     private TextView twilightMorningText;
     private TextView twilightEveningText;
-    private TextView latitudeText;
-    private TextView longitudeText;
+     TextView latitudeText;
+     TextView longitudeText;
     private View view;
     private String formattedDate;
 
     double latitude = 51.7;
     double longitude = 19.4;
+
+    int refreshTimeToSafe=5000;
 
     Thread t;
     Thread t2;
@@ -79,7 +81,11 @@ public class SunFragment extends Fragment {
 
     }
 
-    public void refresh(final int refreshTime){
+    public void refresh(int refTime){
+
+        refreshTimeToSafe = refTime;
+        final int refreshTime = refreshTimeToSafe;
+
         t2 = new Thread() {
             @Override
             public void run() {
@@ -94,7 +100,10 @@ public class SunFragment extends Fragment {
                                 longitudeText.setText(Double.toString(longitude));
                                 latitudeText.setText(Double.toString(latitude));
                                 sampleAstroInfo();
-                                Toast.makeText(getContext(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                                if(getActivity()!=null){
+                                    Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         });
                         Thread.sleep(refreshTime);
