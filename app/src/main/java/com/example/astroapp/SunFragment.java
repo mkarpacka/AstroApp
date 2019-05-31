@@ -53,7 +53,7 @@ public class SunFragment extends Fragment {
     double latitude = 51.7;
     double longitude = 19.4;
 
-    int refreshTimeToSafe=5000;
+    int refreshTimeToSafe;
 
     Thread t;
     Thread t2;
@@ -86,6 +86,7 @@ public class SunFragment extends Fragment {
         refreshTimeToSafe = refTime;
         final int refreshTime = refreshTimeToSafe;
 
+//        Log.i("hej", "sun " + Integer.toString(refreshTime));
         t2 = new Thread() {
             @Override
             public void run() {
@@ -100,6 +101,7 @@ public class SunFragment extends Fragment {
                                 longitudeText.setText(Double.toString(longitude));
                                 latitudeText.setText(Double.toString(latitude));
                                 sampleAstroInfo();
+                                Log.i("hej", "sun " + Integer.toString(refreshTime));
                                 if(getActivity()!=null){
                                     Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
                                 }
@@ -296,6 +298,7 @@ public class SunFragment extends Fragment {
         super.onDetach();
         t.isInterrupted();
 //        t2.isInterrupted();
+
 
     }
 //

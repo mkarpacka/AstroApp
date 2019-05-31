@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Button button;
     private Button localButton;
     private Button button2;
-    private TextView timeText;
+    private int currentFragment = 0;
 
 
     private void showEditDialog() {
@@ -86,6 +86,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         localButton = findViewById(R.id.set_localization_button);
 
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+
         if (tabletSize) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -104,12 +105,17 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
                 @Override
                 public void onClick(View v) {
                     replaceFragment(sunFragment);
+                    currentFragment = 0;
+                    System.out.println(currentFragment);
+
                 }
             });
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     replaceFragment(moonFragment);
+                    currentFragment = 1;
+                    System.out.println(currentFragment);
                 }
 
             });
@@ -141,6 +147,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         savedInstanceState.putDouble("s4", ((MoonFragment) moonFragment).longitude);
         savedInstanceState.putInt("i2", moonFragment.refreshTimeToSafe);
 
+        savedInstanceState.putInt("fragmentId", currentFragment);
+
+//        savedInstanceState.putInt("int", inputFragment.newRefreshRate);
+
     }
 
     @Override
@@ -164,6 +174,17 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         moonFragment.refreshTimeToSafe = savedInstanceState.getInt("i2");
         sunFragment.refreshTimeToSafe = savedInstanceState.getInt("i1");
+
+//        inputFragment.newRefreshRate = savedInstanceState.getInt("int");
+
+        int temp = savedInstanceState.getInt("fragmentId");
+
+        if(temp == 0){
+            replaceFragment(sunFragment);
+        }else{
+            replaceFragment(moonFragment);
+            currentFragment = 1;
+        }
     }
 
 }

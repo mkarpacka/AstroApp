@@ -32,7 +32,6 @@ public class InputFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO:  layouty na tablet i horyzontalny na telefon, refresh
     private String mParam1;
     private String mParam2;
     private EditText mEditText;

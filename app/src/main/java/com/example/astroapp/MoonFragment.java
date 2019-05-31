@@ -59,7 +59,7 @@ public class MoonFragment extends Fragment {
     double latitude = 51.7;
     double longitude = 19.4;
 
-    int refreshTimeToSafe=5000;
+    int refreshTimeToSafe;
 
     public MoonFragment() {
         // Required empty public constructor
@@ -98,6 +98,8 @@ public class MoonFragment extends Fragment {
         refreshTimeToSafe = refTime;
         final int refreshTime = refreshTimeToSafe;
 
+//        Log.i("hej", "moon " + Integer.toString(refreshTime));
+
         t2 = new Thread() {
             @Override
             public void run() {
@@ -112,6 +114,7 @@ public class MoonFragment extends Fragment {
                                 longitudeText.setText(Double.toString(longitude));
                                 latitudeText.setText(Double.toString(latitude));
                                 sampleAstroInfo();
+                                Log.i("hej", "moon " + Integer.toString(refreshTime));
                                 if(getActivity()!=null){
                                     Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
                                 }
@@ -139,8 +142,8 @@ public class MoonFragment extends Fragment {
         longitudeText = (TextView) view.findViewById(R.id.longitude);
         longitudeText.setText(Double.toString(longitude));
         startTimeThread();
-//        sampleAstroInfo();
-        refresh(10000);
+        sampleAstroInfo();
+
         return view;
     }
 
@@ -261,7 +264,9 @@ public class MoonFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         t.isInterrupted();
-        t2.isInterrupted();
+//        if(t2!= null){
+//            t2.isInterrupted();
+//        }
     }
 //
 //    /**

@@ -9,8 +9,8 @@
     tools:context=".MoonFragment">
 
     <Space
-    android:layout_width="wrap_content"
-    android:layout_height="30dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/time_place"
