@@ -1,42 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:id="@+id/firstValue"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/dlugosc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Longitude"/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:id="@+id/secondValue"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+
+        <!--android:layout_marginTop="4dp">-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/szerokosc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Latitude"/>-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button_ok"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:text="Ok" />-->
+
+<!--</LinearLayout>-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:id="@+id/edit_name"
+    android:padding="15dp"
+    android:layout_width="300dp" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/firstValue"
+    <TextView
+        android:id="@+id/title0"
+        android:text="Podaj współrzędne"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_height="wrap_content" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp" />
 
-        <EditText
-            android:id="@+id/dlugosc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Longitude"/>
+    <TextView
+        android:id="@+id/title1"
+        android:text="Długość geograficzna"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/secondValue"
+    <EditText
+        android:id="@+id/dlugosc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text" />
 
-        android:layout_marginTop="4dp">
+    <TextView
+        android:id="@+id/title2"
+        android:text="Szerokość geograficzna"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/szerokosc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Latitude"/>
+    <EditText
+        android:id="@+id/szerokosc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
 
-    </android.support.design.widget.TextInputLayout>
+    <TextView
+        android:text="Częstotliwość odświeżania"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingsSpinner"/>
 
     <Button
-        android:id="@+id/button_ok"
-        android:layout_width="wrap_content"
+        android:id="@+id/ok"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:text="Ok" />
-
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Anuluj" />
 </LinearLayout>

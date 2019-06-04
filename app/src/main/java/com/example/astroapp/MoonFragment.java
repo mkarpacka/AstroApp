@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
@@ -46,17 +47,87 @@ public class MoonFragment extends Fragment {
     private TextView nextFullMoonText;
     private TextView dayMonthText;
     private TextView illumText;
+    TextView latitudeText;
+    TextView longitudeText;
     private View view;
     private String formattedDate;
+
+    Context context1;
+    Thread t;
+    Thread t2;
+
+    double latitude = 51.7;
+    double longitude = 19.4;
+
+    int refreshTimeToSafe;
 
     public MoonFragment() {
         // Required empty public constructor
     }
-    public void showOtherFragment()
-    {
-        Fragment fr=new SunFragment();
-        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
-        fc.replaceFragment(fr);
+
+    public void setCoordinates(String s, String s2){
+
+        try{
+            longitude = Double.parseDouble(s);
+            latitude = Double.parseDouble(s2);
+        }catch (Exception e){
+            if(view != null){
+                Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        boolean check = checkValueOfCoordinates();
+        if(longitudeText != null && latitudeText != null && check){
+            longitudeText.setText(Double.toString(longitude));
+            latitudeText.setText(Double.toString(latitude));
+
+        }
+
+    }
+
+
+    public boolean checkValueOfCoordinates(){
+        if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
+            return true;
+        }else return false;
+    }
+
+
+    public void refresh(int refTime){
+
+        refreshTimeToSafe = refTime;
+        final int refreshTime = refreshTimeToSafe;
+
+//        Log.i("hej", "moon " + Integer.toString(refreshTime));
+
+        t2 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        if(getActivity() == null)
+                            return;
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                longitudeText.setText(Double.toString(longitude));
+                                latitudeText.setText(Double.toString(latitude));
+                                sampleAstroInfo();
+                                Log.i("hej", "moon " + Integer.toString(refreshTime));
+                                if(getActivity()!=null){
+                                    Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+                        Thread.sleep(refreshTime);
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        t2.start();
     }
 
     @Override
@@ -64,14 +135,20 @@ public class MoonFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moon, container,
                 false);
+//        context1 = container.getContext();
+        latitudeText = (TextView) view.findViewById(R.id.latitude);
+        latitudeText.setText(Double.toString(latitude));
+
+        longitudeText = (TextView) view.findViewById(R.id.longitude);
+        longitudeText.setText(Double.toString(longitude));
         startTimeThread();
         sampleAstroInfo();
+
         return view;
     }
 
-
     public void startTimeThread(){
-        Thread t = new Thread() {
+        t = new Thread() {
             @Override
             public void run() {
                 try {
@@ -116,9 +193,6 @@ public class MoonFragment extends Fragment {
         String [] splitedDate = splitDate();
         String [] splitedTime = splitTime();
 
-        double latitude = 51.7;
-        double longitude = 19.4;
-
         AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 
         AstroDateTime astroDateTime = new AstroDateTime();
@@ -139,7 +213,7 @@ public class MoonFragment extends Fragment {
         String moonSet = getPartOfSplitedDate(astroCalculator.getMoonInfo().getMoonset().toString(), 1);
         String nextNewMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextNewMoon().toString(), 1);
         String nextFullMoon = getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 0) + " " + getPartOfSplitedDate(astroCalculator.getMoonInfo().getNextFullMoon().toString(), 1);
-        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge());
+        String dayMonth = Double.toString(astroCalculator.getMoonInfo().getAge()).substring(0,4);
         String illumination = Double.toString(astroCalculator.getMoonInfo().getIllumination()*100).substring(0,4) +"%";
 
 
@@ -163,10 +237,6 @@ public class MoonFragment extends Fragment {
         String [] separateDateTime = splitDateTime(formattedDate);
         String [] separateHourMinSec = separateDateTime[1].split(":");
 
-//        for(int i=0; i<separateHourMinSec.length; i++){
-//            Log.i("hej", separateHourMinSec[i]);
-//        }
-
 
         return separateHourMinSec;
     }
@@ -186,6 +256,18 @@ public class MoonFragment extends Fragment {
         return returnedString;
     }
 
+    public interface MoonFragmentListener {
+        void onFragmentInteraction(String s);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        t.isInterrupted();
+//        if(t2!= null){
+//            t2.isInterrupted();
+//        }
+    }
 //
 //    /**
 //     * Use this factory method to create a new instance of
@@ -228,22 +310,22 @@ public class MoonFragment extends Fragment {
 //        }
 //    }
 //
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        Toast.makeText(context,"Asda",Toast.LENGTH_LONG).show();
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnFragmentInteractionListener");
 //        }
-//    }
+//        context1 = context;
+    }
 //
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+
 //
 //    /**
 //     * This interface must be implemented by activities that contain this
@@ -255,9 +337,6 @@ public class MoonFragment extends Fragment {
 //     * "http://developer.android.com/training/basics/fragments/communicating.html"
 //     * >Communicating with Other Fragments</a> for more information.
 //     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+
 
 }
