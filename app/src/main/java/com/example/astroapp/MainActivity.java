@@ -233,6 +233,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        t.isInterrupted();
+    }
 }
 
 
