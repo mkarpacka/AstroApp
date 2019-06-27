@@ -21,9 +21,6 @@ import com.kwabenaberko.openweathermaplib.implementation.callbacks.CurrentWeathe
 import com.kwabenaberko.openweathermaplib.models.currentweather.CurrentWeather;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 
 public class Weather extends Fragment {
