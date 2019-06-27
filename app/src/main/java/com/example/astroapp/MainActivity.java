@@ -19,6 +19,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
 
@@ -31,6 +34,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private Button button2;
     private Button button3;
     private int currentFragment = 0;
+    private TextView timeText;
+    Thread t;
 
 
     private void showEditDialog() {
@@ -38,6 +43,44 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         inputFragment = InputFragment.newInstance("Ustawienia lokalizacji");
 
         inputFragment.show(fm, "fragment_edit_name");
+    }
+
+    public void startTimeThread() {
+        t = new Thread() {
+
+
+            @Override
+            public void run() {
+
+                while (!isInterrupted()) {
+                    if(MainActivity.this == null)
+                        return;
+
+                    try {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                timeText = findViewById(R.id.time_place);
+
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+                                String formattedDate = df.format(c.getTime());
+
+                                timeText.setText(formattedDate);
+                            }
+                        });
+                        Thread.sleep(1000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        };
+
+        t.start();
     }
 
     @Override
@@ -75,6 +118,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startTimeThread();
 
         sunFragment = new SunFragment();
         moonFragment = new MoonFragment();
@@ -179,9 +224,12 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         if (temp == 0) {
             replaceFragment(sunFragment);
-        } else {
+        } else if (temp == 1) {
             replaceFragment(moonFragment);
             currentFragment = 1;
+        }else{
+            replaceFragment(weatherFragment);
+            currentFragment = 2;
         }
     }
 

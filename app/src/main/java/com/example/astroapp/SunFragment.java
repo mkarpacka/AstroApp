@@ -40,7 +40,7 @@ public class SunFragment extends Fragment {
 //    private String mParam2;
 //
 //    private OnFragmentInteractionListener mListener;
-    private TextView timeText;
+
     private TextView sunriseText;
     private TextView sunsetText;
     private TextView twilightMorningText;
@@ -55,7 +55,7 @@ public class SunFragment extends Fragment {
 
     int refreshTimeToSafe;
 
-    Thread t;
+
     Thread t2;
 
     public SunFragment() {
@@ -134,7 +134,6 @@ public class SunFragment extends Fragment {
         longitudeText = (TextView) view.findViewById(R.id.longitude);
         longitudeText.setText(Double.toString(longitude));
 
-        startTimeThread();
         sampleAstroInfo();
         return view;
     }
@@ -181,35 +180,6 @@ public class SunFragment extends Fragment {
         twilightEveningText.setText(twilightEvening);
     }
 
-    public void startTimeThread(){
-        t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        if(getActivity() == null)
-                            return;
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                timeText = (TextView) view.findViewById(R.id.time_place);
-
-                                Calendar c = Calendar.getInstance();
-                                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-                                String formattedDate = df.format(c.getTime());
-
-                                timeText.setText(formattedDate);
-                            }
-                        });
-                        Thread.sleep(1000);
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-        t.start();
-    }
 
     public String[] splitDateTime(String formattedDate){
 
@@ -296,7 +266,7 @@ public class SunFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        t.isInterrupted();
+//        t.isInterrupted();
 //        t2.isInterrupted();
 
 
