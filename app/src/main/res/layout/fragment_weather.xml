@@ -1,28 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:padding="2dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Weather">
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:columnCount="1"
-        android:rowCount="3">
+    android:layout_gravity="center"
+    android:orientation="vertical"  >
 
         <TextView
             android:id="@+id/cityName"
+            android:text="City"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:text="Szerokość geograficzna:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/longitude"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:text="Długość geograficzna:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/latitude"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:text="City" />
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
 
         <TextView
             android:id="@+id/info"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:text="info" />
-    </GridLayout>
+            android:text="info"
+            android:layout_height="50dp"
+            android:layout_width="match_parent" />
 
 
-</FrameLayout>
+    <Button
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="update" />
+
+
+</LinearLayout>

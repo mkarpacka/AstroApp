@@ -105,7 +105,7 @@ public class InputFragment extends DialogFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                newRefreshRate = 15000;
             }
 
         });
