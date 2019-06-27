@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_name"
-    android:padding="2dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:orientation="vertical"  >
+    android:orientation="vertical"
+    android:padding="2dp">
 
-        <TextView
-            android:id="@+id/cityName"
-            android:text="City"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+    <TextView
+        android:id="@+id/cityName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="City"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/weatherImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        />
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:columnCount="4"
+        android:rowCount="1">
 
         <TextView
             android:id="@+id/textView1"
-            android:text="Szerokość geograficzna:"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Longitude:"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/longitude"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:text="TextView"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+            android:textSize="18dp" />
 
         <TextView
-            android:id="@+id/textView11"
-            android:text="Długość geograficzna:"
+            android:id="@+id/textView22"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Latitude:"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/latitude"
@@ -47,18 +64,24 @@
             android:layout_columnWeight="1"
             android:text="TextView"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+            android:textSize="18dp" />
+    </GridLayout>
 
-        <TextView
-            android:id="@+id/info"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:text="info"
-            android:layout_height="50dp"
-            android:layout_width="match_parent" />
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:text="TEMP" />
+
+    <TextView
+        android:id="@+id/pres"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:text="PRESS" />
 
 
     <Button

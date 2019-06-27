@@ -1,6 +1,8 @@
 package com.example.astroapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +19,11 @@ import com.kwabenaberko.openweathermaplib.constants.Units;
 import com.kwabenaberko.openweathermaplib.implementation.OpenWeatherMapHelper;
 import com.kwabenaberko.openweathermaplib.implementation.callbacks.CurrentWeatherCallback;
 import com.kwabenaberko.openweathermaplib.models.currentweather.CurrentWeather;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class Weather extends Fragment {
@@ -23,10 +31,12 @@ public class Weather extends Fragment {
 
     private View view;
     private TextView cityName;
-    private TextView info;
+    private TextView temp;
+    private TextView pres;
     private Button update;
     private TextView latitudeText;
     private TextView longitudeText;
+    private ImageView weatherImage;
     public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
 
 
@@ -35,7 +45,8 @@ public class Weather extends Fragment {
 
     public void sampleWeatherInfo() {
         OpenWeatherMapHelper helper = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
-        helper.setUnits(Units.IMPERIAL);
+        helper.setUnits(Units.METRIC);
+
 
         helper.getCurrentWeatherByCityName("Berlin", new CurrentWeatherCallback() {
             @Override
@@ -52,6 +63,11 @@ public class Weather extends Fragment {
                 latitudeText.setText(Double.toString(currentWeather.getCoord().getLat()));
                 longitudeText.setText(Double.toString(currentWeather.getCoord().getLon()));
 
+                temp.setText(Double.toString(currentWeather.getMain().getTempMax()) + "°C");
+                pres.setText(Double.toString(currentWeather.getMain().getPressure()) + "hPa");
+
+                setWeahterImage(currentWeather.getWeather().get(0).getIcon());
+
             }
 
             @Override
@@ -62,6 +78,12 @@ public class Weather extends Fragment {
         });
     }
 
+    public void setWeahterImage(String s) {
+        String tempUrl = "http://openweathermap.org/img/wn/" + s + ".png";
+        Picasso.with(getContext()).load(tempUrl).into(weatherImage);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,10 +91,13 @@ public class Weather extends Fragment {
         view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         cityName = view.findViewById(R.id.cityName);
-        info = view.findViewById(R.id.info);
+        temp = view.findViewById(R.id.temp);
+        pres = view.findViewById(R.id.pres);
         update = view.findViewById(R.id.update);
         latitudeText = (TextView) view.findViewById(R.id.latitude);
         longitudeText = (TextView) view.findViewById(R.id.longitude);
+
+        weatherImage = view.findViewById(R.id.weatherImage);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
