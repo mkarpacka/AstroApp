@@ -24,10 +24,12 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
     private SunFragment sunFragment;
     private MoonFragment moonFragment;
+    private Weather weatherFragment;
     private InputFragment inputFragment;
     private Button button;
     private Button localButton;
     private Button button2;
+    private Button button3;
     private int currentFragment = 0;
 
 
@@ -48,19 +50,16 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Log.i("hej", "replaced");
     }
 
-
-
     @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
-        if(inputText != null && inputText2 != null){
+        if (inputText != null && inputText2 != null) {
             moonFragment.setCoordinates(inputText, inputText2);
         }
     }
 
-
     @Override
     public void onFinish(String inputText, String inputText2) {
-        if(inputText != null && inputText2 != null){
+        if (inputText != null && inputText2 != null) {
             sunFragment.setCoordinates(inputText, inputText2);
         }
     }
@@ -79,8 +78,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         sunFragment = new SunFragment();
         moonFragment = new MoonFragment();
-//        inputFragment = new InputFragment();
-
+        weatherFragment = new Weather();
 
 
         localButton = findViewById(R.id.set_localization_button);
@@ -92,7 +90,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, sunFragment);
             fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
-//        fragmentTransaction.addToBackStack(fragment.toString());
+
             fragmentTransaction.commit();
         } else {
             replaceFragment(sunFragment);
@@ -100,6 +98,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
             button = (Button) findViewById(R.id.fragment_sun_button);
             button2 = (Button) findViewById(R.id.fragment_moon_button);
+            button3 = findViewById(R.id.fragment_weather_button);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,6 +118,15 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
                 }
 
             });
+            button3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    replaceFragment(weatherFragment);
+                    currentFragment = 2;
+                    System.out.println(currentFragment);
+                }
+
+            });
         }
 
 
@@ -132,7 +140,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
 
     }
-
 
 
     @Override
@@ -149,17 +156,12 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         savedInstanceState.putInt("fragmentId", currentFragment);
 
-//        savedInstanceState.putInt("int", inputFragment.newRefreshRate);
-
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-//        ((SunFragment) sunFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s1")), Double.toString(savedInstanceState.getDouble("s2")));
-//        ((MoonFragment) moonFragment).setCoordinates(Double.toString(savedInstanceState.getDouble("s3")), Double.toString(savedInstanceState.getDouble("s4")));
-//
         sunFragment.latitude = savedInstanceState.getDouble("s1");
         sunFragment.longitude = savedInstanceState.getDouble("s2");
 
@@ -169,19 +171,15 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         moonFragment.latitude = savedInstanceState.getDouble("s3");
         moonFragment.longitude = savedInstanceState.getDouble("s4");
 
-//        moonFragment.longitudeText.setText(Double.toString(moonFragment.longitude));
-//        moonFragment.latitudeText.setText(Double.toString(moonFragment.latitude));
-
         moonFragment.refreshTimeToSafe = savedInstanceState.getInt("i2");
         sunFragment.refreshTimeToSafe = savedInstanceState.getInt("i1");
 
-//        inputFragment.newRefreshRate = savedInstanceState.getInt("int");
 
         int temp = savedInstanceState.getInt("fragmentId");
 
-        if(temp == 0){
+        if (temp == 0) {
             replaceFragment(sunFragment);
-        }else{
+        } else {
             replaceFragment(moonFragment);
             currentFragment = 1;
         }

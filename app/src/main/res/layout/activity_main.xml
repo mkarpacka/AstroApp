@@ -17,8 +17,8 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:columnCount="2"
-        android:rowCount="3">
+        android:columnCount="3"
+        android:rowCount="1">
 
         <Button
             android:id="@+id/fragment_sun_button"
@@ -30,6 +30,13 @@
         <Button
             android:id="@+id/fragment_moon_button"
             android:text="MOON"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/fragment_weather_button"
+            android:text="WEATHER"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             tools:ignore="MissingConstraints" />
