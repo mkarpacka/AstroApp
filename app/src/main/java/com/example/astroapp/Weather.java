@@ -37,18 +37,19 @@ public class Weather extends Fragment {
     private TextView latitudeText;
     private TextView longitudeText;
     private ImageView weatherImage;
+    private TextView description;
     public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
 
 
     public Weather() {
     }
 
-    public void sampleWeatherInfo() {
+    public void sampleWeatherInfo(String city) {
         OpenWeatherMapHelper helper = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
         helper.setUnits(Units.METRIC);
 
 
-        helper.getCurrentWeatherByCityName("Berlin", new CurrentWeatherCallback() {
+        helper.getCurrentWeatherByCityName(city, new CurrentWeatherCallback() {
             @Override
             public void onSuccess(CurrentWeather currentWeather) {
                 Log.v("pogoda", "Coordinates: " + currentWeather.getCoord().getLat() + ", " + currentWeather.getCoord().getLon() + "\n"
@@ -67,6 +68,8 @@ public class Weather extends Fragment {
                 pres.setText(Double.toString(currentWeather.getMain().getPressure()) + "hPa");
 
                 setWeahterImage(currentWeather.getWeather().get(0).getIcon());
+
+                description.setText(currentWeather.getWeather().get(0).getDescription());
 
             }
 
@@ -96,13 +99,14 @@ public class Weather extends Fragment {
         update = view.findViewById(R.id.update);
         latitudeText = (TextView) view.findViewById(R.id.latitude);
         longitudeText = (TextView) view.findViewById(R.id.longitude);
+        description = view.findViewById(R.id.description);
 
         weatherImage = view.findViewById(R.id.weatherImage);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sampleWeatherInfo();
+                sampleWeatherInfo("Łódź");
             }
 
         });
