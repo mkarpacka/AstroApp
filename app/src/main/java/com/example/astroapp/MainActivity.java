@@ -122,8 +122,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.lon = myPreferences.getString("longitude", " ");
         Settings.image = myPreferences.getString("image", " ");
 
-        weatherFragment.setWeahterImage(Settings.image);
         Log.v("pogoda", "loaded");
+        Log.v("pogoda", "zaladowane image:" + Settings.image);
     }
 
     public void loadalways() {

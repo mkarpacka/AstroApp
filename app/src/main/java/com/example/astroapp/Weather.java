@@ -39,7 +39,6 @@ public class Weather extends Fragment {
     public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
 
 
-    String tempUrl;
 
     public Weather() {
     }
@@ -74,9 +73,8 @@ public class Weather extends Fragment {
                 Settings.pressure = currentWeather.getMain().getPressure() + "hPa";
                 pres.setText(Settings.pressure);
 
-                setWeahterImage(currentWeather.getWeather().get(0).getIcon());
-//                saveImage(currentWeather.getWeather().get(0).getIcon());
-
+                Settings.image = currentWeather.getWeather().get(0).getIcon();
+                setWeahterImage(Settings.image);
 
                 Settings.description = currentWeather.getWeather().get(0).getDescription();
                 description.setText(Settings.description);
@@ -94,12 +92,11 @@ public class Weather extends Fragment {
     }
 
     public void setWeahterImage(String s) {
-        tempUrl = "http://openweathermap.org/img/wn/" + s + ".png";
-        Settings.image = tempUrl;
-//        Picasso.with(getContext()).load(tempUrl).into(weatherImage);
 
-        Picasso.get().load(Settings.image).into(weatherImage);
-        Log.v("pogoda", Settings.image);
+        String tempUrl = "http://openweathermap.org/img/wn/" + s + ".png";
+
+        Picasso.get().load(tempUrl).into(weatherImage);
+        Log.v("pogoda", tempUrl);
 
     }
 
@@ -121,7 +118,6 @@ public class Weather extends Fragment {
         description = view.findViewById(R.id.description);
 
         weatherImage = view.findViewById(R.id.weatherImage);
-//        weatherImage.setImageBitmap();
 
         cityName.setText(Settings.city);
         temp.setText(Settings.temperature);
@@ -130,18 +126,16 @@ public class Weather extends Fragment {
         latitudeText.setText(Double.toString(Settings.latitude));
         longitudeText.setText(Double.toString(Settings.longitude));
 
+        setWeahterImage(Settings.image);
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sampleWeatherInfo("Łódź");
-                Picasso.get().load(Settings.image).into(weatherImage);
             }
 
         });
 
-
-
-            setWeahterImage(Settings.image);
 
 
         return view;
