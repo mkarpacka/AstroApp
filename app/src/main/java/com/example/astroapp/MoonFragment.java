@@ -96,38 +96,38 @@ public class MoonFragment extends Fragment {
     public void refresh(int refTime){
 
         refreshTimeToSafe = refTime;
-        final int refreshTime = refreshTimeToSafe;
-
-//        Log.i("hej", "moon " + Integer.toString(refreshTime));
-
-        t2 = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        if(getActivity() == null)
-                            return;
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                longitudeText.setText(Double.toString(longitude));
-                                latitudeText.setText(Double.toString(latitude));
-                                sampleAstroInfo();
-                                Log.i("hej", "moon " + Integer.toString(refreshTime));
-                                if(getActivity()!=null){
-                                    Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-                        Thread.sleep(refreshTime);
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-        t2.start();
+//        final int refreshTime = refreshTimeToSafe;
+//
+////        Log.i("hej", "moon " + Integer.toString(refreshTime));
+//
+//        t2 = new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    while (!isInterrupted()) {
+//                        if(getActivity() == null)
+//                            return;
+//
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                longitudeText.setText(Double.toString(longitude));
+//                                latitudeText.setText(Double.toString(latitude));
+//                                sampleAstroInfo();
+//                                Log.i("hej", "moon " + Integer.toString(refreshTime));
+//                                if(getActivity()!=null){
+//                                    Toast.makeText(getActivity(), "Zaktualizowano", Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                            }
+//                        });
+//                        Thread.sleep(refreshTime);
+//                    }
+//                } catch (InterruptedException e) {
+//                }
+//            }
+//        };
+//        t2.start();
     }
 
     @Override

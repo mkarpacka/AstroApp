@@ -1,12 +1,6 @@
 package com.example.astroapp;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,18 +80,14 @@ public class Weather extends Fragment {
             @Override
             public void onFailure(Throwable throwable) {
                 Log.v("pogoda", throwable.getMessage());
-                Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Info out-of-date", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void setWeahterImage(String s) {
-
         String tempUrl = "http://openweathermap.org/img/wn/" + s + ".png";
-
         Picasso.get().load(tempUrl).into(weatherImage);
-        Log.v("pogoda", tempUrl);
-
     }
 
 
@@ -126,15 +116,16 @@ public class Weather extends Fragment {
         latitudeText.setText(Double.toString(Settings.latitude));
         longitudeText.setText(Double.toString(Settings.longitude));
 
+        sampleWeatherInfo("Los Angeles");
         setWeahterImage(Settings.image);
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sampleWeatherInfo("Łódź");
-            }
-
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sampleWeatherInfo("Los Angeles");
+//            }
+//
+//        });
 
 
 

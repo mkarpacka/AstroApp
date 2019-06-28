@@ -36,6 +36,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private SunFragment sunFragment;
     private MoonFragment moonFragment;
     private Weather weatherFragment;
+    private WeatherInfo weatherInfo;
+    private WeatherForecast weatherForecast;
     private InputFragment inputFragment;
     private Button button;
     private Button localButton;
@@ -109,6 +111,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.commit();
         load();
         Log.v("pogoda", "saved");
+        Log.v("pogoda", Settings.description);
     }
 
     public void load() {
@@ -122,6 +125,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.lon = myPreferences.getString("longitude", " ");
         Settings.image = myPreferences.getString("image", " ");
 
+//        Settings.latitude = Double.parseDouble(Settings.lat);
+//        Settings.longitude = Double.parseDouble(Settings.lon);
         Log.v("pogoda", "loaded");
         Log.v("pogoda", "zaladowane image:" + Settings.image);
     }
@@ -150,8 +155,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
         if (inputText != null && inputText2 != null) {
-            moonFragment.setCoordinates(inputText, inputText2);
-            sunFragment.setCoordinates(inputText, inputText2);
+            moonFragment.setCoordinates(Settings.lat, Settings.lon);
+            sunFragment.setCoordinates(Settings.lat, Settings.lon);
         }
     }
 
@@ -184,9 +189,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(Settings.iteration == 0) {
-            loadalways();
-        }
+//        if(Settings.iteration == 0) {
+//            loadalways();
+//        }
 
         setContentView(R.layout.activity_main);
 
@@ -195,86 +200,59 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         sunFragment = new SunFragment();
         moonFragment = new MoonFragment();
         weatherFragment = new Weather();
+        weatherInfo = new WeatherInfo();
+        weatherForecast = new WeatherForecast();
 
 
         localButton = findViewById(R.id.set_localization_button);
 
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
 
-//        if (tabletSize) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
-//            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
-//
-//            fragmentTransaction.commit();
-//        } else {
-//            replaceFragment(sunFragment);
-//
-//
-//            button = (Button) findViewById(R.id.fragment_sun_button);
-//            button2 = (Button) findViewById(R.id.fragment_moon_button);
-//            button3 = findViewById(R.id.fragment_weather_button);
-//
-//            button.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    replaceFragment(sunFragment);
-//                    currentFragment = 0;
-//                    System.out.println(currentFragment);
-//
-//                }
-//            });
-//            button2.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    replaceFragment(moonFragment);
-//                    currentFragment = 1;
-//                    System.out.println(currentFragment);
-//                }
-//
-//            });
-//            button3.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    replaceFragment(weatherFragment);
-//                    currentFragment = 2;
-//                    System.out.println(currentFragment);
-//                }
-//
-//            });
-//        }
+        if (tabletSize) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
+            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
 
+            fragmentTransaction.commit();
+        } else {
+            mPager = findViewById(R.id.ViewPager);
 
-        mPager = findViewById(R.id.ViewPager);
+            List<Fragment> fragments = new ArrayList<>();
+            fragments.add(weatherFragment);
+            fragments.add(weatherInfo);
+            fragments.add(weatherForecast);
+            fragments.add(sunFragment);
+            fragments.add(moonFragment);
+            mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), fragments);
+            mPager.setAdapter(mPagerAdapter);
+        }
 
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(weatherFragment);
-        fragments.add(sunFragment);
-        fragments.add(moonFragment);
-        mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), fragments);
-        mPager.setAdapter(mPagerAdapter);
 
         localButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEditDialog();
-                load();
             }
 
         });
 
         Log.v("pogoda", String.valueOf(haveNetworkConnection()));
 
-        if(Settings.afterUpdate) {
-            if (!haveNetworkConnection()) {
-                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
-                load();
-            } else {
-                save();
-                Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
-            }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        if (!haveNetworkConnection()) {
+            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
+            load();
+        } else {
+            save();
+            Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
