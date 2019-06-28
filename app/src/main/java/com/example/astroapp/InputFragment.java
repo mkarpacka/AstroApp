@@ -32,8 +32,6 @@ public class InputFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
     private EditText mEditText;
     private EditText mEditText2;
     private Button okButton;
@@ -44,10 +42,6 @@ public class InputFragment extends DialogFragment {
     int newRefreshRate;
     private List<String> options = Arrays.asList("5 Sekund", "15 Sekund", "Minuta", "5 Minut");
 
-
-    public void setOnHeadlineSelectedListener(InputFragmentListener callback) {
-        this.listener = callback;
-    }
 
 
     public InputFragment() {
@@ -62,14 +56,6 @@ public class InputFragment extends DialogFragment {
     }
 
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,7 +109,6 @@ public class InputFragment extends DialogFragment {
 //                listener = (InputFragmentListener) getActivity();
                 if(listener!=null){
                     listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
-                    listener.onFinish(mEditText.getText().toString(), mEditText2.getText().toString());
                     listener.setRefreshFrequency(newRefreshRate);
                     Log.i("hej", Integer.toString(newRefreshRate));
                 }
@@ -143,37 +128,13 @@ public class InputFragment extends DialogFragment {
     }
 
 
-//    @Override
-//    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//        if (EditorInfo.IME_ACTION_DONE == actionId) {
-//            // Return input text back to activity through the implemented listener
-//            InputFragmentListener listener = (InputFragmentListener) getActivity();
-//            listener.onFinishEditDialog(mEditText.getText().toString());
-//            // Close the dialog and return back to the parent activity
-//            dismiss();
-//            return true;
-//        }
-//        return false;
-//    }
-
-
     public interface InputFragmentListener {
         void onFinishEditDialog(String inputText, String inputText2);
-        void onFinish(String inputText, String inputText2);
         void setRefreshFrequency(int time);
     }
 
 
 
-
-
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-//
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -190,21 +151,7 @@ public class InputFragment extends DialogFragment {
         super.onDetach();
         listener = null;
     }
-//
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+
 
 
 }

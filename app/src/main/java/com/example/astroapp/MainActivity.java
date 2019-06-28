@@ -4,8 +4,10 @@ package com.example.astroapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -56,7 +58,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             public void run() {
 
                 while (!isInterrupted()) {
-                    if(MainActivity.this == null)
+                    if (MainActivity.this == null)
                         return;
 
                     try {
@@ -86,6 +88,37 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         t.start();
     }
 
+    public void save() {
+        SharedPreferences myPreferences
+                = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+
+        myEditor.putString("description", Settings.description);
+        myEditor.putString("city", Settings.city);
+        myEditor.putString("temperature", Settings.temperature);
+        myEditor.putString("pressure", Settings.pressure);
+        myEditor.putString("latitude", Settings.lat);
+        myEditor.putString("longitude", Settings.lon);
+        myEditor.putString("image", Settings.image);
+        myEditor.commit();
+        load();
+        Log.v("pogoda", "saved");
+    }
+
+    public void load() {
+        SharedPreferences myPreferences
+                = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        Settings.description = myPreferences.getString("description", " ");
+        Settings.city = myPreferences.getString("city", " ");
+        Settings.temperature = myPreferences.getString("temperature", " ");
+        Settings.pressure = myPreferences.getString("pressure", " ");
+        Settings.lat = myPreferences.getString("latitude", " ");
+        Settings.lon = myPreferences.getString("longitude", " ");
+        Settings.image = myPreferences.getString("image", " ");
+
+        Log.v("pogoda", "loaded");
+    }
+
     @Override
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -100,15 +133,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     public void onFinishEditDialog(String inputText, String inputText2) {
         if (inputText != null && inputText2 != null) {
             moonFragment.setCoordinates(inputText, inputText2);
-        }
-    }
-
-    @Override
-    public void onFinish(String inputText, String inputText2) {
-        if (inputText != null && inputText2 != null) {
             sunFragment.setCoordinates(inputText, inputText2);
         }
     }
+
 
     @Override
     public void setRefreshFrequency(int time) {
@@ -205,6 +233,16 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         Log.v("pogoda", String.valueOf(haveNetworkConnection()));
 
+        if(Settings.afterUpdate) {
+            if (!haveNetworkConnection()) {
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
+                load();
+            } else {
+                save();
+                Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
 
@@ -248,7 +286,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         } else if (temp == 1) {
             replaceFragment(moonFragment);
             currentFragment = 1;
-        }else{
+        } else {
             replaceFragment(weatherFragment);
             currentFragment = 2;
         }
