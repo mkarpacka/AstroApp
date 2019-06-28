@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class MainActivity extends FragmentActivity implements FragmentChangeListener, InputFragment.InputFragmentListener {
@@ -41,6 +44,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private int currentFragment = 0;
     private TextView timeText;
     Thread t;
+
+    SlidePagerAdapter mPagerAdapter;
+    ViewPager mPager;
 
 
     private void showEditDialog() {
@@ -116,7 +122,19 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.lon = myPreferences.getString("longitude", " ");
         Settings.image = myPreferences.getString("image", " ");
 
+        weatherFragment.setWeahterImage(Settings.image);
         Log.v("pogoda", "loaded");
+    }
+
+    public void loadalways() {
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+        Settings.numberofCities = Integer.valueOf(myPreferences.getString("numberofCities", "0"));
+        for (int i = 0; i <= Settings.numberofCities; i++) {
+            Settings.hashSet.add("Lodz");
+            Settings.cities.add(i, myPreferences.getString(("miasto" + i), "Lodz"));
+        }
+        Settings.iteration += 1;
     }
 
     @Override
@@ -165,6 +183,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(Settings.iteration == 0) {
+            loadalways();
+        }
+
         setContentView(R.layout.activity_main);
 
         startTimeThread();
@@ -178,55 +201,65 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
 
-        if (tabletSize) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
-            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
+//        if (tabletSize) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
+//            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
+//
+//            fragmentTransaction.commit();
+//        } else {
+//            replaceFragment(sunFragment);
+//
+//
+//            button = (Button) findViewById(R.id.fragment_sun_button);
+//            button2 = (Button) findViewById(R.id.fragment_moon_button);
+//            button3 = findViewById(R.id.fragment_weather_button);
+//
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    replaceFragment(sunFragment);
+//                    currentFragment = 0;
+//                    System.out.println(currentFragment);
+//
+//                }
+//            });
+//            button2.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    replaceFragment(moonFragment);
+//                    currentFragment = 1;
+//                    System.out.println(currentFragment);
+//                }
+//
+//            });
+//            button3.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    replaceFragment(weatherFragment);
+//                    currentFragment = 2;
+//                    System.out.println(currentFragment);
+//                }
+//
+//            });
+//        }
 
-            fragmentTransaction.commit();
-        } else {
-            replaceFragment(sunFragment);
 
+        mPager = findViewById(R.id.ViewPager);
 
-            button = (Button) findViewById(R.id.fragment_sun_button);
-            button2 = (Button) findViewById(R.id.fragment_moon_button);
-            button3 = findViewById(R.id.fragment_weather_button);
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    replaceFragment(sunFragment);
-                    currentFragment = 0;
-                    System.out.println(currentFragment);
-
-                }
-            });
-            button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    replaceFragment(moonFragment);
-                    currentFragment = 1;
-                    System.out.println(currentFragment);
-                }
-
-            });
-            button3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    replaceFragment(weatherFragment);
-                    currentFragment = 2;
-                    System.out.println(currentFragment);
-                }
-
-            });
-        }
-
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(weatherFragment);
+        fragments.add(sunFragment);
+        fragments.add(moonFragment);
+        mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), fragments);
+        mPager.setAdapter(mPagerAdapter);
 
         localButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showEditDialog();
+                load();
             }
 
         });
@@ -266,30 +299,30 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        sunFragment.latitude = savedInstanceState.getDouble("s1");
-        sunFragment.longitude = savedInstanceState.getDouble("s2");
+//        sunFragment.latitude = savedInstanceState.getDouble("s1");
+//        sunFragment.longitude = savedInstanceState.getDouble("s2");
+//
+//        sunFragment.longitudeText.setText(Double.toString(sunFragment.longitude));
+//        sunFragment.latitudeText.setText(Double.toString(sunFragment.latitude));
+//
+//        moonFragment.latitude = savedInstanceState.getDouble("s3");
+//        moonFragment.longitude = savedInstanceState.getDouble("s4");
+//
+//        moonFragment.refreshTimeToSafe = savedInstanceState.getInt("i2");
+//        sunFragment.refreshTimeToSafe = savedInstanceState.getInt("i1");
 
-        sunFragment.longitudeText.setText(Double.toString(sunFragment.longitude));
-        sunFragment.latitudeText.setText(Double.toString(sunFragment.latitude));
 
-        moonFragment.latitude = savedInstanceState.getDouble("s3");
-        moonFragment.longitude = savedInstanceState.getDouble("s4");
-
-        moonFragment.refreshTimeToSafe = savedInstanceState.getInt("i2");
-        sunFragment.refreshTimeToSafe = savedInstanceState.getInt("i1");
-
-
-        int temp = savedInstanceState.getInt("fragmentId");
-
-        if (temp == 0) {
-            replaceFragment(sunFragment);
-        } else if (temp == 1) {
-            replaceFragment(moonFragment);
-            currentFragment = 1;
-        } else {
-            replaceFragment(weatherFragment);
-            currentFragment = 2;
-        }
+//        int temp = savedInstanceState.getInt("fragmentId");
+//
+//        if (temp == 0) {
+//            replaceFragment(sunFragment);
+//        } else if (temp == 1) {
+//            replaceFragment(moonFragment);
+//            currentFragment = 1;
+//        } else {
+//            replaceFragment(weatherFragment);
+//            currentFragment = 2;
+//        }
     }
 
     @Override

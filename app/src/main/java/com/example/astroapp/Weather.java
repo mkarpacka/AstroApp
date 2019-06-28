@@ -21,16 +21,7 @@ import com.kwabenaberko.openweathermaplib.constants.Units;
 import com.kwabenaberko.openweathermaplib.implementation.OpenWeatherMapHelper;
 import com.kwabenaberko.openweathermaplib.implementation.callbacks.CurrentWeatherCallback;
 import com.kwabenaberko.openweathermaplib.models.currentweather.CurrentWeather;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Set;
 
 
 public class Weather extends Fragment {
@@ -48,7 +39,7 @@ public class Weather extends Fragment {
     public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
 
 
-    String tempUrl= " ";
+    String tempUrl;
 
     public Weather() {
     }
@@ -108,8 +99,7 @@ public class Weather extends Fragment {
 //        Picasso.with(getContext()).load(tempUrl).into(weatherImage);
 
         Picasso.get().load(Settings.image).into(weatherImage);
-
-//        imageDownload(getContext(), tempUrl);
+        Log.v("pogoda", Settings.image);
 
     }
 
@@ -149,6 +139,9 @@ public class Weather extends Fragment {
 
         });
 
+
+
+            setWeahterImage(Settings.image);
 
 
         return view;

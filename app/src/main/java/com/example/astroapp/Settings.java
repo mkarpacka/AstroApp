@@ -1,5 +1,9 @@
 package com.example.astroapp;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 class Settings {
 
     public static boolean afterUpdate = false;
@@ -18,8 +22,8 @@ class Settings {
     public static String image;
 
 
-
-
-
-
+    public static int numberofCities = 0;
+    public static List<String> cities = new ArrayList<>();
+    public static LinkedHashSet<String> hashSet = new LinkedHashSet<String>();
+    public static int iteration;
 }

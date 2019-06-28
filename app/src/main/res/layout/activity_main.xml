@@ -31,36 +31,36 @@
 
     </GridLayout>
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:columnCount="3"
-        android:rowCount="1">
+    <!--<GridLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:columnCount="3"-->
+        <!--android:rowCount="1">-->
 
-        <Button
-            android:id="@+id/fragment_weather_button"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:text="NOW"
-            tools:ignore="MissingConstraints" />
+        <!--<Button-->
+            <!--android:id="@+id/fragment_weather_button"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:text="NOW"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
-        <Button
-            android:id="@+id/fragment_sun_button"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:text="WEATHER"
-            tools:ignore="MissingConstraints" />
+        <!--<Button-->
+            <!--android:id="@+id/fragment_sun_button"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:text="WEATHER"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
-        <Button
-            android:id="@+id/fragment_moon_button"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:text="FORECAST"
-            tools:ignore="MissingConstraints" />
+        <!--<Button-->
+            <!--android:id="@+id/fragment_moon_button"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:text="FORECAST"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
 
 
-    </GridLayout>
+    <!--</GridLayout>-->
 
     <TextView
         android:id="@+id/time_place"
@@ -79,22 +79,27 @@
     <!--android:rowCount="2">-->
 
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill"
-        tools:ignore="MissingConstraints" />
-
     <!--<FrameLayout-->
-    <!--android:id="@+id/fragment_container2"-->
-    <!--android:layout_rowWeight="1"-->
-    <!--android:layout_columnWeight="1"-->
-    <!--android:background="@android:color/holo_blue_bright" />-->
+        <!--android:id="@+id/fragment_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_rowWeight="1"-->
+        <!--android:layout_columnWeight="1"-->
+        <!--android:layout_gravity="fill"-->
+        <!--tools:ignore="MissingConstraints" />-->
 
-    <!--</GridLayout>-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
 
 
 </LinearLayout>

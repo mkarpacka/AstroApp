@@ -14,33 +14,33 @@
         android:layout_height="50dp"
         tools:ignore="MissingConstraints" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:columnCount="3"
-        android:rowCount="1">
+    <!--<GridLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:columnCount="3"-->
+        <!--android:rowCount="1">-->
 
-        <Button
-            android:id="@+id/fragment_sun_button"
-            android:text="SUN"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            tools:ignore="MissingConstraints" />
+        <!--<Button-->
+            <!--android:id="@+id/fragment_sun_button"-->
+            <!--android:text="SUN"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
-        <Button
-            android:id="@+id/fragment_moon_button"
-            android:text="MOON"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            tools:ignore="MissingConstraints" />
-        <Button
-            android:id="@+id/fragment_weather_button"
-            android:text="WEATHER"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            tools:ignore="MissingConstraints" />
+        <!--<Button-->
+            <!--android:id="@+id/fragment_moon_button"-->
+            <!--android:text="MOON"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--tools:ignore="MissingConstraints" />-->
+        <!--<Button-->
+            <!--android:id="@+id/fragment_weather_button"-->
+            <!--android:text="WEATHER"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--tools:ignore="MissingConstraints" />-->
 
-    </GridLayout>
+    <!--</GridLayout>-->
     <TextView
         android:id="@+id/time_place"
         android:layout_width="match_parent"
@@ -49,6 +49,18 @@
         android:textStyle="bold"
         android:textSize="27sp"
         android:text="godzinka"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
 
 
     <!--<GridLayout-->
@@ -59,14 +71,14 @@
 
 
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_rowWeight="1"
-        android:layout_columnWeight="1"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_gravity="fill"
-        tools:ignore="MissingConstraints" />
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragment_container"-->
+        <!--android:layout_rowWeight="1"-->
+        <!--android:layout_columnWeight="1"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_gravity="fill"-->
+        <!--tools:ignore="MissingConstraints" />-->
 
         <!--<FrameLayout-->
             <!--android:id="@+id/fragment_container2"-->
