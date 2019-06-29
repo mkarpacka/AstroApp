@@ -4,44 +4,31 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.kwabenaberko.openweathermaplib.implementation.callbacks.ThreeHourForecastCallback;
+import com.kwabenaberko.openweathermaplib.models.threehourforecast.ThreeHourForecast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WeatherForecast.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WeatherForecast#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WeatherForecast extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    TextView textView;
 
     public WeatherForecast() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WeatherForecast.
-     */
-    // TODO: Rename and change types and number of parameters
     public static WeatherForecast newInstance(String param1, String param2) {
         WeatherForecast fragment = new WeatherForecast();
         Bundle args = new Bundle();
@@ -64,15 +51,41 @@ public class WeatherForecast extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather_forecast, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather_forecast, container, false);
+
+        textView = view.findViewById(R.id.text555);
+
+        sampleForecastInfo(Settings.city);
+
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void sampleForecastInfo(String city){
+        Settings.helper.getThreeHourForecastByCityName(city, new ThreeHourForecastCallback() {
+            @Override
+            public void onSuccess(ThreeHourForecast threeHourForecast) {
+                Log.v("pogoda", "City/Country: "+ threeHourForecast.getCity().getName() + "/" + threeHourForecast.getCity().getCountry() +"\n"
+                        +"Forecast Array Count: " + threeHourForecast.getCnt() +"\n"
+                        //For this example, we are logging details of only the first forecast object in the forecasts array
+                        +"First Forecast Date Timestamp: " + threeHourForecast.getList().get(0).getDt() +"\n"
+                        +"First Forecast Weather Description: " + threeHourForecast.getList().get(0).getWeatherArray().get(0).getDescription()+ "\n"
+                        +"First Forecast Max Temperature: " + threeHourForecast.getList().get(0).getMain().getTempMax()+"\n"
+                        +"First Forecast Wind Speed: " + threeHourForecast.getList().get(0).getWind().getSpeed() + "\n"
+                );
+
+                String temp =  threeHourForecast.getCity().getName() + " " + threeHourForecast.getList().get(0).getWeatherArray().get(0).getDescription();
+                textView.setText(temp);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                Log.v("pogoda", throwable.getMessage());
+            }
+        });
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -88,21 +101,8 @@ public class WeatherForecast extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

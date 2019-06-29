@@ -1,10 +1,15 @@
 package com.example.astroapp;
 
+import com.kwabenaberko.openweathermaplib.implementation.OpenWeatherMapHelper;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 class Settings {
+
+    public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
+    public static OpenWeatherMapHelper helper = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
 
     public static boolean afterUpdate = false;
     public static int updateIterator = 10;

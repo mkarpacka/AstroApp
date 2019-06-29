@@ -127,8 +127,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
 //        Settings.latitude = Double.parseDouble(Settings.lat);
 //        Settings.longitude = Double.parseDouble(Settings.lon);
+        fun();
         Log.v("pogoda", "loaded");
-        Log.v("pogoda", "zaladowane image:" + Settings.image);
     }
 
     public void loadalways() {
@@ -158,6 +158,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             moonFragment.setCoordinates(Settings.lat, Settings.lon);
             sunFragment.setCoordinates(Settings.lat, Settings.lon);
         }
+    }
+
+    public void fun() {
+        moonFragment.setCoordinates(Settings.lat, Settings.lon);
+        sunFragment.setCoordinates(Settings.lat, Settings.lon);
     }
 
 
@@ -239,6 +244,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         Log.v("pogoda", String.valueOf(haveNetworkConnection()));
 
+        load();
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -249,6 +256,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             load();
         } else {
+//            weatherFragment.sampleWeatherInfo("New York");
             save();
             Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
         }
@@ -307,6 +315,20 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     protected void onDestroy() {
         super.onDestroy();
         t.isInterrupted();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        save();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        load();
     }
 }
 

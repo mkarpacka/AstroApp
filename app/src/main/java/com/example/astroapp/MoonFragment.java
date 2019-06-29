@@ -137,10 +137,10 @@ public class MoonFragment extends Fragment {
                 false);
 //        context1 = container.getContext();
         latitudeText = (TextView) view.findViewById(R.id.latitude);
-        latitudeText.setText(Double.toString(latitude));
+        latitudeText.setText(Settings.lat);
 
         longitudeText = (TextView) view.findViewById(R.id.longitude);
-        longitudeText.setText(Double.toString(longitude));
+        longitudeText.setText(Settings.lon);
 
         sampleAstroInfo();
 

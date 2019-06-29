@@ -30,19 +30,17 @@ public class Weather extends Fragment {
     private TextView longitudeText;
     private ImageView weatherImage;
     private TextView description;
-    public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
-
 
 
     public Weather() {
     }
 
     public void sampleWeatherInfo(String city) {
-        OpenWeatherMapHelper helper = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
-        helper.setUnits(Units.METRIC);
+
+        Settings.helper.setUnits(Units.METRIC);
 
 
-        helper.getCurrentWeatherByCityName(city, new CurrentWeatherCallback() {
+        Settings.helper.getCurrentWeatherByCityName(city, new CurrentWeatherCallback() {
             @Override
             public void onSuccess(CurrentWeather currentWeather) {
                 Log.v("pogoda", "Coordinates: " + currentWeather.getCoord().getLat() + ", " + currentWeather.getCoord().getLon() + "\n"
@@ -75,12 +73,14 @@ public class Weather extends Fragment {
 
                 Settings.afterUpdate = true;
 
+                Toast.makeText(getActivity(), "Data downloaded", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 Log.v("pogoda", throwable.getMessage());
-                Toast.makeText(getActivity(), "Info out-of-date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Unable to download data", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,12 +91,10 @@ public class Weather extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_weather, container, false);
-
 
 
         cityName = view.findViewById(R.id.cityName);
@@ -116,7 +114,7 @@ public class Weather extends Fragment {
         latitudeText.setText(Double.toString(Settings.latitude));
         longitudeText.setText(Double.toString(Settings.longitude));
 
-        sampleWeatherInfo("Los Angeles");
+//        sampleWeatherInfo("Los Angeles");
         setWeahterImage(Settings.image);
 
 //        update.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +124,6 @@ public class Weather extends Fragment {
 //            }
 //
 //        });
-
 
 
         return view;
