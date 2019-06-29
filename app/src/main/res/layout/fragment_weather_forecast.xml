@@ -70,8 +70,8 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             android:text="today"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/temp1"
@@ -105,8 +105,8 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             android:text="tomorrow"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/temp2"
@@ -141,8 +141,8 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             android:text="2 days"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/temp3"
@@ -178,8 +178,8 @@
             android:layout_columnWeight="1"
             android:gravity="center"
             android:text="3 days"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/temp4"
@@ -199,7 +199,6 @@
 
         <ImageView
             android:id="@+id/image4"
-
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:gravity="center"

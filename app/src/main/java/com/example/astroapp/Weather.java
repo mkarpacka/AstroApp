@@ -25,7 +25,6 @@ public class Weather extends Fragment {
     private TextView cityName;
     private TextView temp;
     private TextView pres;
-    private Button update;
     private TextView latitudeText;
     private TextView longitudeText;
     private ImageView weatherImage;
@@ -87,7 +86,7 @@ public class Weather extends Fragment {
 
     public void setWeahterImage(String s) {
         String tempUrl = "http://openweathermap.org/img/wn/" + s + ".png";
-        Picasso.get().load(tempUrl).into(weatherImage);
+        Picasso.get().load(tempUrl).fit().into(weatherImage);
     }
 
 
@@ -100,7 +99,6 @@ public class Weather extends Fragment {
         cityName = view.findViewById(R.id.cityName);
         temp = view.findViewById(R.id.temp);
         pres = view.findViewById(R.id.pres);
-        update = view.findViewById(R.id.update);
         latitudeText = (TextView) view.findViewById(R.id.latitude);
         longitudeText = (TextView) view.findViewById(R.id.longitude);
         description = view.findViewById(R.id.description);
@@ -116,15 +114,6 @@ public class Weather extends Fragment {
 
 //        sampleWeatherInfo("Los Angeles");
         setWeahterImage(Settings.image);
-
-//        update.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sampleWeatherInfo("Los Angeles");
-//            }
-//
-//        });
-
 
         return view;
     }

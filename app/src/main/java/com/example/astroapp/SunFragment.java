@@ -63,24 +63,6 @@ public class SunFragment extends Fragment {
     }
 
 
-
-    public void setCoordinates(String s, String s2){
-
-        try{
-            longitude = Double.parseDouble(s);
-            latitude = Double.parseDouble(s2);
-        }catch (Exception e){
-//            makeErrorToast();
-        }
-
-        boolean check = checkValueOfCoordinates();
-        if(longitudeText != null && latitudeText != null && check){
-            longitudeText.setText(Double.toString(longitude));
-            latitudeText.setText(Double.toString(latitude));
-        }
-
-    }
-
     public void refresh(int refTime){
 
         refreshTimeToSafe = refTime;
@@ -117,11 +99,6 @@ public class SunFragment extends Fragment {
 //        t2.start();
     }
 
-    public boolean checkValueOfCoordinates(){
-        if(((longitude < -180.0 || longitude > 180.0) && ( latitude < -90.0 || latitude > 90.0))) {
-            return true;
-        }else return false;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,10 +106,10 @@ public class SunFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_sun, container,
                 false);
         latitudeText = (TextView) view.findViewById(R.id.latitude);
-        latitudeText.setText(Double.toString(latitude));
+        latitudeText.setText(String.valueOf(Settings.latitude));
 
         longitudeText = (TextView) view.findViewById(R.id.longitude);
-        longitudeText.setText(Double.toString(longitude));
+        longitudeText.setText(String.valueOf(Settings.longitude));
 
         sampleAstroInfo();
         return view;

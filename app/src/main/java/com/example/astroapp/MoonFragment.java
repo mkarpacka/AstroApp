@@ -65,25 +65,6 @@ public class MoonFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setCoordinates(String s, String s2){
-
-        try{
-            longitude = Double.parseDouble(s);
-            latitude = Double.parseDouble(s2);
-        }catch (Exception e){
-            if(view != null){
-                Toast.makeText(view.getContext(), "Błędne dane", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        boolean check = checkValueOfCoordinates();
-        if(longitudeText != null && latitudeText != null && check){
-            longitudeText.setText(Double.toString(longitude));
-            latitudeText.setText(Double.toString(latitude));
-
-        }
-
-    }
 
 
     public boolean checkValueOfCoordinates(){
@@ -137,10 +118,10 @@ public class MoonFragment extends Fragment {
                 false);
 //        context1 = container.getContext();
         latitudeText = (TextView) view.findViewById(R.id.latitude);
-        latitudeText.setText(Settings.lat);
+        latitudeText.setText(String.valueOf(Settings.latitude));
 
         longitudeText = (TextView) view.findViewById(R.id.longitude);
-        longitudeText.setText(Settings.lon);
+        longitudeText.setText(String.valueOf(Settings.longitude));
 
         sampleAstroInfo();
 
@@ -164,6 +145,8 @@ public class MoonFragment extends Fragment {
         String [] splitedDate = splitDate();
         String [] splitedTime = splitTime();
 
+        latitude = Settings.latitude;
+        longitude = Settings.longitude;
         AstroCalculator.Location astroLoc = new AstroCalculator.Location(latitude, longitude);
 
         AstroDateTime astroDateTime = new AstroDateTime();

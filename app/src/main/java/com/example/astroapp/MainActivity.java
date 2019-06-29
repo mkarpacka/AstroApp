@@ -101,6 +101,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
                 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor myEditor = myPreferences.edit();
 
+        Settings.lat = String.valueOf(Settings.latitude);
+        Settings.lon = String.valueOf(Settings.longitude);
         myEditor.putString("description", Settings.description);
         myEditor.putString("city", Settings.city);
         myEditor.putString("temperature", Settings.temperature);
@@ -126,7 +128,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
 //        Settings.latitude = Double.parseDouble(Settings.lat);
 //        Settings.longitude = Double.parseDouble(Settings.lon);
-        fun();
         Log.v("pogoda", "loaded");
     }
 
@@ -153,15 +154,6 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
     @Override
     public void onFinishEditDialog(String inputText, String inputText2) {
-        if (inputText != null && inputText2 != null) {
-            moonFragment.setCoordinates(Settings.lat, Settings.lon);
-            sunFragment.setCoordinates(Settings.lat, Settings.lon);
-        }
-    }
-
-    public void fun() {
-        moonFragment.setCoordinates(Settings.lat, Settings.lon);
-        sunFragment.setCoordinates(Settings.lat, Settings.lon);
     }
 
 

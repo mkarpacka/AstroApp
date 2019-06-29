@@ -63,7 +63,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/description"
@@ -90,13 +90,6 @@
         android:text="PRESS"
         android:textAlignment="center"
         android:textSize="24sp" />
-
-
-    <Button
-        android:id="@+id/update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="update" />
 
 
 </LinearLayout>

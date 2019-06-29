@@ -18,14 +18,20 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kwabenaberko.openweathermaplib.constants.Units;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 
 public class InputFragment extends DialogFragment {
@@ -37,15 +43,15 @@ public class InputFragment extends DialogFragment {
     private Button okButton;
     private Button cancelButton;
     private Spinner spinner;
+    private Switch mySwitch;
     View view;
     private InputFragmentListener listener;
     int newRefreshRate;
-    private List<String> options = Arrays.asList("5 Sekund", "15 Sekund", "Minuta", "5 Minut");
+    private List<String> options = Arrays.asList("5 seconds", "15 seconds", "1 minute", "5 minutes");
 
 
 
-    public InputFragment() {
-    }
+    public InputFragment() { }
 
     public static InputFragment newInstance(String title) {
         InputFragment frag = new InputFragment();
@@ -71,10 +77,19 @@ public class InputFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mEditText = (EditText) view.findViewById(R.id.dlugosc);
-        mEditText2 = (EditText) view.findViewById(R.id.szerokosc);
         okButton = (Button) view.findViewById(R.id.ok);
         cancelButton = (Button) view.findViewById(R.id.cancel);
         spinner = view.findViewById(R.id.settingsSpinner);
+        mySwitch = view.findViewById(R.id.switch1);
+
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.units = isChecked;
+                Settings.helper.setUnits(Units.IMPERIAL);
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+            }
+        });
 
         spinner.setAdapter(new ArrayAdapter<String>(view.getContext(), R.layout.support_simple_spinner_dropdown_item, options));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -87,6 +102,7 @@ public class InputFragment extends DialogFragment {
                     case 3: newRefreshRate = 300000; break;
                 }
 
+
             }
 
             @Override
@@ -96,8 +112,6 @@ public class InputFragment extends DialogFragment {
 
         });
 
-        String title = getArguments().getString("title", "Podaj współrzędne");
-        getDialog().setTitle(title);
 
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
@@ -106,12 +120,8 @@ public class InputFragment extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                listener = (InputFragmentListener) getActivity();
-                if(listener!=null){
-                    listener.onFinishEditDialog(mEditText.getText().toString(), mEditText2.getText().toString());
-                    listener.setRefreshFrequency(newRefreshRate);
-                    Log.i("hej", Integer.toString(newRefreshRate));
-                }
+                Settings.inputCityToCheck = mEditText.toString();
+                Settings.refresh = newRefreshRate;
 
                 dismiss();
             }
@@ -126,6 +136,7 @@ public class InputFragment extends DialogFragment {
         });
 
     }
+
 
 
     public interface InputFragmentListener {
