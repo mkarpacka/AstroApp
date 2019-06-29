@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kwabenaberko.openweathermaplib.implementation.callbacks.CurrentWeatherCallback;
 import com.kwabenaberko.openweathermaplib.implementation.callbacks.ThreeHourForecastCallback;
@@ -21,6 +22,13 @@ public class WeatherInfo extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    private TextView cityName;
+    private TextView latitudeText;
+    private TextView longitudeText;
+    private TextView windSpeed;
+    private TextView windDegree;
+    private TextView humidity;
+    private TextView clouds;
 
 
     public WeatherInfo() {
@@ -48,8 +56,25 @@ public class WeatherInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        sampleExpandedWeatherInfo("New York");
-        return inflater.inflate(R.layout.fragment_weather_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather_info, container, false);
+
+        cityName = view.findViewById(R.id.cityName);
+        latitudeText = view.findViewById(R.id.latitude);
+        longitudeText = view.findViewById(R.id.longitude);
+        windSpeed = view.findViewById(R.id.windSpeed);
+        windDegree = view.findViewById(R.id.windDegree);
+        humidity = view.findViewById(R.id.humidity);
+        clouds = view.findViewById(R.id.clouds);
+
+        cityName.setText(Settings.city);
+        latitudeText.setText(Double.toString(Settings.latitude));
+        longitudeText.setText(Double.toString(Settings.longitude));
+        windSpeed.setText(Settings.windSpeed);
+        windDegree.setText(Settings.windDegree);
+        clouds.setText(Settings.clouds);
+        humidity.setText(Settings.humidity);
+
+        return view;
     }
 
 
@@ -63,7 +88,7 @@ public class WeatherInfo extends Fragment {
         super.onDetach();
     }
 
-    public void sampleExpandedWeatherInfo(String city){
+    public void sampleExpandedWeatherInfo(String city) {
         Settings.helper.getCurrentWeatherByCityName(city, new CurrentWeatherCallback() {
             @Override
             public void onSuccess(CurrentWeather currentWeather) {
@@ -75,10 +100,25 @@ public class WeatherInfo extends Fragment {
                         + "City, Country: " + currentWeather.getName() + ", " + currentWeather.getSys().getCountry()
                 );
 
-                currentWeather.getWind().getSpeed();
-                currentWeather.getWind().getDeg();
-                currentWeather.getClouds().getAll();
-                currentWeather.getMain().getHumidity();
+
+                cityName.setText(Settings.city);
+
+                latitudeText.setText(Double.toString(Settings.latitude));
+
+                longitudeText.setText(Double.toString(Settings.longitude));
+
+                Settings.windSpeed = String.valueOf(currentWeather.getWind().getSpeed());
+                windSpeed.setText(Settings.windSpeed);
+
+                Settings.windDegree = String.valueOf(currentWeather.getWind().getDeg());
+                windDegree.setText(Settings.windDegree);
+
+                Settings.clouds = String.valueOf(currentWeather.getClouds().getAll());
+                clouds.setText(Settings.clouds);
+
+                Settings.humidity = String.valueOf(currentWeather.getMain().getHumidity());
+                humidity.setText(Settings.humidity);
+
             }
 
             @Override

@@ -70,7 +70,6 @@ public class Weather extends Fragment {
                 Settings.description = currentWeather.getWeather().get(0).getDescription();
                 description.setText(Settings.description);
 
-                Settings.afterUpdate = true;
 
                 Toast.makeText(getActivity(), "Data downloaded", Toast.LENGTH_SHORT).show();
 
@@ -99,8 +98,8 @@ public class Weather extends Fragment {
         cityName = view.findViewById(R.id.cityName);
         temp = view.findViewById(R.id.temp);
         pres = view.findViewById(R.id.pres);
-        latitudeText = (TextView) view.findViewById(R.id.latitude);
-        longitudeText = (TextView) view.findViewById(R.id.longitude);
+        latitudeText = view.findViewById(R.id.latitude);
+        longitudeText = view.findViewById(R.id.longitude);
         description = view.findViewById(R.id.description);
 
         weatherImage = view.findViewById(R.id.weatherImage);

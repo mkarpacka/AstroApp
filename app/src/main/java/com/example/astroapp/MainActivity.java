@@ -103,6 +103,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         Settings.lat = String.valueOf(Settings.latitude);
         Settings.lon = String.valueOf(Settings.longitude);
+
         myEditor.putString("description", Settings.description);
         myEditor.putString("city", Settings.city);
         myEditor.putString("temperature", Settings.temperature);
@@ -110,6 +111,12 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.putString("latitude", Settings.lat);
         myEditor.putString("longitude", Settings.lon);
         myEditor.putString("image", Settings.image);
+        myEditor.putString("windSpeed", Settings.windSpeed);
+        myEditor.putString("windDegree", Settings.windDegree);
+        myEditor.putString("humidity", Settings.humidity);
+        myEditor.putString("clouds", Settings.clouds);
+
+
         myEditor.commit();
 //        load();
         Log.v("pogoda", "saved");
@@ -126,8 +133,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.lon = myPreferences.getString("longitude", " ");
         Settings.image = myPreferences.getString("image", " ");
 
-//        Settings.latitude = Double.parseDouble(Settings.lat);
-//        Settings.longitude = Double.parseDouble(Settings.lon);
+        Settings.windSpeed = myPreferences.getString("windSpeed", " ");
+        Settings.windDegree = myPreferences.getString("windDegree", " ");
+        Settings.humidity = myPreferences.getString("humidity", " ");
+        Settings.clouds = myPreferences.getString("clouds", " ");
+
         Log.v("pogoda", "loaded");
     }
 
@@ -247,7 +257,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             load();
         } else {
-//            weatherFragment.sampleWeatherInfo("New York");
+            weatherFragment.sampleWeatherInfo("Pekin");
+            weatherInfo.sampleExpandedWeatherInfo("Pekin");
             save();
             Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
         }
