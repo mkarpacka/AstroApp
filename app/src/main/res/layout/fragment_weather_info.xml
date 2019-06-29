@@ -1,14 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeatherInfo">
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="2dp">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/cityName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="40dp"
+        android:text="City"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:columnCount="4"
+        android:rowCount="1">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Longitude:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Latitude:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="18dp" />
+    </GridLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Wind:"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:columnCount="2"
+        android:rowCount="2">
+
+        <TextView
+            android:id="@+id/wind1"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Speed:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/windSpeed"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/wind2"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="Degree:"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/windDegree"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="18dp" />
+
+
+    </GridLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+    <TextView
+        android:id="@+id/coludsText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Clouds:"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/clouds"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/humText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Humidity:"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="18dp" />
+
+</LinearLayout>

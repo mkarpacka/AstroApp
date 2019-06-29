@@ -23,7 +23,6 @@ public class WeatherForecast extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    TextView textView;
 
     public WeatherForecast() {
         // Required empty public constructor
@@ -53,7 +52,6 @@ public class WeatherForecast extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_weather_forecast, container, false);
 
-        textView = view.findViewById(R.id.text555);
 
         sampleForecastInfo(Settings.city);
 
@@ -73,9 +71,25 @@ public class WeatherForecast extends Fragment {
                         +"First Forecast Max Temperature: " + threeHourForecast.getList().get(0).getMain().getTempMax()+"\n"
                         +"First Forecast Wind Speed: " + threeHourForecast.getList().get(0).getWind().getSpeed() + "\n"
                 );
+                Log.v("pogoda", "City/Country: "+ threeHourForecast.getCity().getName() + "/" + threeHourForecast.getCity().getCountry() +"\n"
+                        +"Forecast Array Count: " + threeHourForecast.getCnt() +"\n"
+                        //For this example, we are logging details of only the first forecast object in the forecasts array
+                        +"Second Forecast Date Timestamp: " + threeHourForecast.getList().get(8).getDt() +"\n"
+                        +"Second Forecast Weather Description: " + threeHourForecast.getList().get(8).getWeatherArray().get(0).getDescription()+ "\n"
+                        +"Second Forecast Max Temperature: " + threeHourForecast.getList().get(8).getMain().getTempMax()+"\n"
+                        +"Second Forecast Wind Speed: " + threeHourForecast.getList().get(8).getWind().getSpeed() + "\n"
+                );
 
-                String temp =  threeHourForecast.getCity().getName() + " " + threeHourForecast.getList().get(0).getWeatherArray().get(0).getDescription();
-                textView.setText(temp);
+                Log.v("pogoda", "City/Country: "+ threeHourForecast.getCity().getName() + "/" + threeHourForecast.getCity().getCountry() +"\n"
+                        +"Forecast Array Count: " + threeHourForecast.getCnt() +"\n"
+                        //For this example, we are logging details of only the first forecast object in the forecasts array
+                        +"Third Forecast Date Timestamp: " + threeHourForecast.getList().get(16).getDt() +"\n"
+                        +"Third Forecast Weather Description: " + threeHourForecast.getList().get(16).getWeatherArray().get(0).getDescription()+ "\n"
+                        +"Third Forecast Max Temperature: " + threeHourForecast.getList().get(16).getMain().getTempMax()+"\n"
+                        +"Third Forecast Wind Speed: " + threeHourForecast.getList().get(16).getWind().getSpeed() + "\n"
+                );
+
+
             }
 
             @Override

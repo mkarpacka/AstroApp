@@ -109,9 +109,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.putString("longitude", Settings.lon);
         myEditor.putString("image", Settings.image);
         myEditor.commit();
-        load();
+//        load();
         Log.v("pogoda", "saved");
-        Log.v("pogoda", Settings.description);
     }
 
     public void load() {
