@@ -101,15 +101,15 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
                 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         SharedPreferences.Editor myEditor = myPreferences.edit();
 
-        Settings.lat = String.valueOf(Settings.latitude);
-        Settings.lon = String.valueOf(Settings.longitude);
+        String s1 = String.valueOf(Settings.latitude);
+        String s2 = String.valueOf(Settings.longitude);
 
         myEditor.putString("description", Settings.description);
         myEditor.putString("city", Settings.city);
         myEditor.putString("temperature", Settings.temperature);
         myEditor.putString("pressure", Settings.pressure);
-        myEditor.putString("latitude", Settings.lat);
-        myEditor.putString("longitude", Settings.lon);
+        myEditor.putString("latitude", s1);
+        myEditor.putString("longitude", s2);
         myEditor.putString("image", Settings.image);
         myEditor.putString("windSpeed", Settings.windSpeed);
         myEditor.putString("windDegree", Settings.windDegree);
@@ -129,8 +129,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.city = myPreferences.getString("city", " ");
         Settings.temperature = myPreferences.getString("temperature", " ");
         Settings.pressure = myPreferences.getString("pressure", " ");
-        Settings.lat = myPreferences.getString("latitude", " ");
-        Settings.lon = myPreferences.getString("longitude", " ");
+        Settings.latitude = Double.parseDouble(myPreferences.getString("latitude", " "));
+        Settings.longitude = Double.parseDouble(myPreferences.getString("longitude", " "));
         Settings.image = myPreferences.getString("image", " ");
 
         Settings.windSpeed = myPreferences.getString("windSpeed", " ");
