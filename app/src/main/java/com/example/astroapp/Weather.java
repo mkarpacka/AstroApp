@@ -111,7 +111,7 @@ public class Weather extends Fragment {
         latitudeText.setText(Double.toString(Settings.latitude));
         longitudeText.setText(Double.toString(Settings.longitude));
 
-//        sampleWeatherInfo("Los Angeles");
+        sampleWeatherInfo("Los Angeles");
         setWeahterImage(Settings.image);
 
         return view;

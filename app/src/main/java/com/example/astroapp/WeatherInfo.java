@@ -100,7 +100,7 @@ public class WeatherInfo extends Fragment {
                         + "City, Country: " + currentWeather.getName() + ", " + currentWeather.getSys().getCountry()
                 );
 
-
+                Settings.city = currentWeather.getName();
                 cityName.setText(Settings.city);
 
                 latitudeText.setText(Double.toString(Settings.latitude));

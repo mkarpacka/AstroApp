@@ -71,6 +71,10 @@ public class WeatherForecast extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_weather_forecast, container, false);
 
+        cityName = view.findViewById(R.id.cityName);
+        latitudeText = view.findViewById(R.id.latitude);
+        longitudeText = view.findViewById(R.id.longitude);
+
         temp1 = view.findViewById(R.id.temp1);
         wind1 = view.findViewById(R.id.wind1);
         image1 = view.findViewById(R.id.image1);
@@ -84,25 +88,31 @@ public class WeatherForecast extends Fragment {
         wind4 = view.findViewById(R.id.wind4);
         image4 = view.findViewById(R.id.image4);
 
-        cityName = view.findViewById(R.id.cityName);
-        latitudeText = view.findViewById(R.id.latitude);
-        longitudeText = view.findViewById(R.id.longitude);
 
-        sampleForecastInfo(Settings.city);
+        cityName.setText(Settings.city);
+        latitudeText.setText(Double.toString(Settings.latitude));
+        longitudeText.setText(Double.toString(Settings.longitude));
 
-//        temp1.setText(Settings.temp1);
-//        temp2.setText(Settings.temp2);
-//        temp3.setText(Settings.temp3);
-//
-//        wind1.setText(Settings.wind1);
-//        wind2.setText(Settings.wind2);
-//        wind3.setText(Settings.wind3);
+        temp1.setText(Settings.temp1);
+        temp2.setText(Settings.temp2);
+        temp3.setText(Settings.temp3);
+        temp4.setText(Settings.temp4);
+
+        wind1.setText(Settings.wind1);
+        wind2.setText(Settings.wind2);
+        wind3.setText(Settings.wind3);
+        wind4.setText(Settings.wind4);
+
+        setWeahterImage(Settings.image1, image1);
+        setWeahterImage(Settings.image2, image2);
+        setWeahterImage(Settings.image3, image3);
+        setWeahterImage(Settings.image4, image4);
 
         return view;
     }
 
     public void sampleForecastInfo(String city) {
-        Settings.helper.getThreeHourForecastByCityName(city, new ThreeHourForecastCallback() {
+        Settings.helper1.getThreeHourForecastByCityName(city, new ThreeHourForecastCallback() {
             @Override
             public void onSuccess(ThreeHourForecast threeHourForecast) {
                 Log.v("pogoda", "City/Country: " + threeHourForecast.getCity().getName() + "/" + threeHourForecast.getCity().getCountry() + "\n"
@@ -131,11 +141,15 @@ public class WeatherForecast extends Fragment {
                         + "Third Forecast Wind Speed: " + threeHourForecast.getList().get(16).getWind().getSpeed() + "\n"
                 );
 
+                Settings.city = threeHourForecast.getCity().getName();
+
                 cityName.setText(Settings.city);
 
                 latitudeText.setText(Double.toString(Settings.latitude));
 
                 longitudeText.setText(Double.toString(Settings.longitude));
+
+
 
                 Settings.temp1 = String.valueOf(threeHourForecast.getList().get(0).getMain().getTempMax());
                 Settings.wind1 = String.valueOf(threeHourForecast.getList().get(0).getWind().getSpeed());
@@ -145,13 +159,13 @@ public class WeatherForecast extends Fragment {
                 Settings.wind2 = String.valueOf(threeHourForecast.getList().get(8).getWind().getSpeed());
                 Settings.image2 = String.valueOf(threeHourForecast.getList().get(8).getWeatherArray().get(0).getIcon());
 
-                Settings.temp3 = String.valueOf(threeHourForecast.getList().get(8).getMain().getTempMax());
-                Settings.wind3 = String.valueOf(threeHourForecast.getList().get(8).getWind().getSpeed());
-                Settings.image3 = String.valueOf(threeHourForecast.getList().get(8).getWeatherArray().get(0).getIcon());
+                Settings.temp3 = String.valueOf(threeHourForecast.getList().get(16).getMain().getTempMax());
+                Settings.wind3 = String.valueOf(threeHourForecast.getList().get(16).getWind().getSpeed());
+                Settings.image3 = String.valueOf(threeHourForecast.getList().get(16).getWeatherArray().get(0).getIcon());
 
-                Settings.temp4 = String.valueOf(threeHourForecast.getList().get(8).getMain().getTempMax());
-                Settings.wind4 = String.valueOf(threeHourForecast.getList().get(8).getWind().getSpeed());
-                Settings.image4 = String.valueOf(threeHourForecast.getList().get(8).getWeatherArray().get(0).getIcon());
+                Settings.temp4 = String.valueOf(threeHourForecast.getList().get(24).getMain().getTempMax());
+                Settings.wind4 = String.valueOf(threeHourForecast.getList().get(24).getWind().getSpeed());
+                Settings.image4 = String.valueOf(threeHourForecast.getList().get(24).getWeatherArray().get(0).getIcon());
 
                 temp1.setText(Settings.temp1);
                 wind1.setText(Settings.wind1);

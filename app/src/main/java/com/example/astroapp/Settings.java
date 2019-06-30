@@ -10,6 +10,7 @@ class Settings {
 
     public static final String OPEN_WEATHER_MAP_API_KEY = "a203203f305d74fc5b59e13c09c6f48b";
     public static OpenWeatherMapHelper helper = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
+    public static OpenWeatherMapHelper helper1 = new OpenWeatherMapHelper(OPEN_WEATHER_MAP_API_KEY);
 
     public static int numberofCities = 0;
     public static List<String> cities = new ArrayList<>();

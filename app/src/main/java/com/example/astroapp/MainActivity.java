@@ -118,6 +118,15 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.putString("temp1", Settings.temp1);
         myEditor.putString("wind1", Settings.wind1);
         myEditor.putString("image1", Settings.image1);
+        myEditor.putString("temp2", Settings.temp2);
+        myEditor.putString("wind2", Settings.wind2);
+        myEditor.putString("image2", Settings.image2);
+        myEditor.putString("temp3", Settings.temp3);
+        myEditor.putString("wind3", Settings.wind3);
+        myEditor.putString("image3", Settings.image3);
+        myEditor.putString("temp4", Settings.temp4);
+        myEditor.putString("wind4", Settings.wind4);
+        myEditor.putString("image4", Settings.image4);
 
         myEditor.commit();
 //        load();
@@ -131,8 +140,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.city = myPreferences.getString("city", " ");
         Settings.temperature = myPreferences.getString("temperature", " ");
         Settings.pressure = myPreferences.getString("pressure", " ");
-        Settings.latitude = Double.parseDouble(myPreferences.getString("latitude", " "));
-        Settings.longitude = Double.parseDouble(myPreferences.getString("longitude", " "));
+//        Settings.latitude = Double.parseDouble(myPreferences.getString("latitude", " "));
+//        Settings.longitude = Double.parseDouble(myPreferences.getString("longitude", " "));
         Settings.image = myPreferences.getString("image", " ");
 
         Settings.windSpeed = myPreferences.getString("windSpeed", " ");
@@ -143,6 +152,18 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.temp1 =  myPreferences.getString("temp1", " ");
         Settings.wind1 =  myPreferences.getString("wind1", " ");
         Settings.image1 =  myPreferences.getString("image1", " ");
+
+        Settings.temp2 =  myPreferences.getString("temp2", " ");
+        Settings.wind2 =  myPreferences.getString("wind2", " ");
+        Settings.image2 =  myPreferences.getString("image2", " ");
+
+        Settings.temp3 =  myPreferences.getString("temp3", " ");
+        Settings.wind3 =  myPreferences.getString("wind3", " ");
+        Settings.image3 =  myPreferences.getString("image3", " ");
+
+        Settings.temp4 =  myPreferences.getString("temp4", " ");
+        Settings.wind4 =  myPreferences.getString("wind4", " ");
+        Settings.image4 =  myPreferences.getString("image4", " ");
 
 
         Log.v("pogoda", "loaded");
@@ -222,12 +243,23 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
 
         if (tabletSize) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
-            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
+//            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
+//
+//            fragmentTransaction.commit();
 
-            fragmentTransaction.commit();
+            mPager = findViewById(R.id.ViewPager);
+
+            List<Fragment> fragments = new ArrayList<>();
+            fragments.add(weatherFragment);
+            fragments.add(weatherInfo);
+            fragments.add(weatherForecast);
+            fragments.add(sunFragment);
+            fragments.add(moonFragment);
+            mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), fragments);
+            mPager.setAdapter(mPagerAdapter);
         } else {
             mPager = findViewById(R.id.ViewPager);
 
@@ -264,8 +296,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             load();
         } else {
-//            weatherFragment.sampleWeatherInfo("Pekin");
-//            weatherInfo.sampleExpandedWeatherInfo("Pekin");
+//            weatherFragment.sampleWeatherInfo("ŁÓDŹ");
+//            weatherInfo.sampleExpandedWeatherInfo("Warszawa");
+//            weatherForecast.sampleForecastInfo("ŁÓDŹ");
             save();
             Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
         }
