@@ -115,7 +115,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.putString("windDegree", Settings.windDegree);
         myEditor.putString("humidity", Settings.humidity);
         myEditor.putString("clouds", Settings.clouds);
-
+        myEditor.putString("temp1", Settings.temp1);
+        myEditor.putString("wind1", Settings.wind1);
+        myEditor.putString("image1", Settings.image1);
 
         myEditor.commit();
 //        load();
@@ -137,6 +139,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         Settings.windDegree = myPreferences.getString("windDegree", " ");
         Settings.humidity = myPreferences.getString("humidity", " ");
         Settings.clouds = myPreferences.getString("clouds", " ");
+
+        Settings.temp1 =  myPreferences.getString("temp1", " ");
+        Settings.wind1 =  myPreferences.getString("wind1", " ");
+        Settings.image1 =  myPreferences.getString("image1", " ");
+
 
         Log.v("pogoda", "loaded");
     }
@@ -257,8 +264,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             load();
         } else {
-            weatherFragment.sampleWeatherInfo("Pekin");
-            weatherInfo.sampleExpandedWeatherInfo("Pekin");
+//            weatherFragment.sampleWeatherInfo("Pekin");
+//            weatherInfo.sampleExpandedWeatherInfo("Pekin");
             save();
             Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_SHORT).show();
         }

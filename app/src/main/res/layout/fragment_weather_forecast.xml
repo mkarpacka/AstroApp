@@ -91,11 +91,10 @@
 
         <ImageView
             android:id="@+id/image1"
-            android:layout_width="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:gravity="center"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
         <!--next-->
 
@@ -126,11 +125,10 @@
 
         <ImageView
             android:id="@+id/image2"
-            android:layout_width="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:gravity="center"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
         <!--next-->
 
@@ -166,7 +164,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:gravity="center"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
 
         <!--next-->
@@ -202,7 +200,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:gravity="center"
-            android:scaleType="fitXY" />
+            android:scaleType="fitCenter" />
 
 
     </GridLayout>
