@@ -47,11 +47,11 @@ public class InputFragment extends DialogFragment {
     View view;
     private InputFragmentListener listener;
     int newRefreshRate;
-    private List<String> options = Arrays.asList("5 seconds", "15 seconds", "1 minute", "5 minutes");
+    private List<String> options = Arrays.asList("now", "1 minute", "10 minutes", "15 minutes");
 
 
-
-    public InputFragment() { }
+    public InputFragment() {
+    }
 
     public static InputFragment newInstance(String title) {
         InputFragment frag = new InputFragment();
@@ -60,7 +60,6 @@ public class InputFragment extends DialogFragment {
         frag.setArguments(args);
         return frag;
     }
-
 
 
     @Override
@@ -95,11 +94,19 @@ public class InputFragment extends DialogFragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0: newRefreshRate = 5000; break;
-                    case 1: newRefreshRate = 15000; break;
-                    case 2: newRefreshRate = 60000; break;
-                    case 3: newRefreshRate = 300000; break;
+                switch (position) {
+                    case 0:
+                        newRefreshRate = 1000;
+                        break;
+                    case 1:
+                        newRefreshRate = 60000;
+                        break;
+                    case 2:
+                        newRefreshRate = 600000;
+                        break;
+                    case 3:
+                        newRefreshRate = 618000;
+                        break;
                 }
 
 
@@ -107,7 +114,7 @@ public class InputFragment extends DialogFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                newRefreshRate = 15000;
+                newRefreshRate = 600000;
             }
 
         });
@@ -120,7 +127,11 @@ public class InputFragment extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Settings.inputCityToCheck = mEditText.toString();
+                Settings.inputCityToCheck = mEditText.getText().toString();
+                Settings.cities.add(Settings.inputCityToCheck);
+                Toast.makeText(getActivity(), "Added city: " + Settings.inputCityToCheck, Toast.LENGTH_SHORT).show();
+
+
                 Settings.refresh = newRefreshRate;
 
                 dismiss();
@@ -138,12 +149,11 @@ public class InputFragment extends DialogFragment {
     }
 
 
-
     public interface InputFragmentListener {
         void onFinishEditDialog(String inputText, String inputText2);
+
         void setRefreshFrequency(int time);
     }
-
 
 
     @Override
@@ -162,7 +172,6 @@ public class InputFragment extends DialogFragment {
         super.onDetach();
         listener = null;
     }
-
 
 
 }

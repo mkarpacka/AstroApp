@@ -19,14 +19,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     private WeatherInfo weatherInfo;
     private WeatherForecast weatherForecast;
     private InputFragment inputFragment;
+    private FavouritesFragment favouritesFragment;
     private Button button;
     private Button localButton;
     private Button button2;
@@ -50,6 +54,10 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     SlidePagerAdapter mPagerAdapter;
     ViewPager mPager;
 
+    private ListView list ;
+    private ArrayAdapter<String> listViewAdapter;
+    private Button set;
+
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
@@ -57,6 +65,14 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
 
         inputFragment.show(fm, "fragment_edit_name");
     }
+
+    private void showFavourites() {
+        FragmentManager fm = getSupportFragmentManager();
+        favouritesFragment = FavouritesFragment.newInstance("Ustawienia lokalizacji");
+
+        favouritesFragment.show(fm, "fragment_edit_name");
+    }
+
 
     public void startTimeThread() {
         t = new Thread() {
@@ -128,6 +144,11 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         myEditor.putString("wind4", Settings.wind4);
         myEditor.putString("image4", Settings.image4);
 
+//        for (int i = 0; i <= Settings.numberofCities; i++) {
+//            myEditor.putString(("miasto" + i), Settings.cities.get(i));
+//            System.out.println(i + "= " + Settings.cities.get(i));
+//        }
+
         myEditor.commit();
 //        load();
         Log.v("pogoda", "saved");
@@ -173,6 +194,7 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         Settings.numberofCities = Integer.valueOf(myPreferences.getString("numberofCities", "0"));
+
         for (int i = 0; i <= Settings.numberofCities; i++) {
             Settings.hashSet.add("Lodz");
             Settings.cities.add(i, myPreferences.getString(("miasto" + i), "Lodz"));
@@ -223,9 +245,9 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if(Settings.iteration == 0) {
+        if(Settings.cities == null) {
 //            loadalways();
-//        }
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -237,6 +259,8 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         weatherInfo = new WeatherInfo();
         weatherForecast = new WeatherForecast();
 
+
+        set = findViewById(R.id.set);
 
         localButton = findViewById(R.id.set_localization_button);
 
@@ -272,6 +296,14 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
             @Override
             public void onClick(View v) {
                 showEditDialog();
+            }
+
+        });
+
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFavourites();
             }
 
         });

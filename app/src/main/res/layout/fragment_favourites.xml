@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FavouritesFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add localization"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp" />
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:" />
+
+    <EditText
+        android:id="@+id/dlugosc"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select from list" />
+
+    <Spinner
+        android:id="@+id/settingsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apply" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
+
+</LinearLayout>

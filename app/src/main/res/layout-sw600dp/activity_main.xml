@@ -9,13 +9,28 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/set_localization_button"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Set localization"
-        tools:ignore="MissingConstraints" />
+        android:columnCount="4"
+        android:rowCount="1">
 
+        <Button
+            android:id="@+id/set_localization_button"
+            android:text="OPTIONS"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="3"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/set"
+            android:text="FAVOURITES"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            tools:ignore="MissingConstraints" />
+
+
+    </GridLayout>
     <TextView
         android:id="@+id/time_place"
         android:layout_width="match_parent"

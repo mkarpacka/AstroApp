@@ -17,8 +17,8 @@ class Settings {
     public static LinkedHashSet<String> hashSet = new LinkedHashSet<String>();
     public static int iteration;
 
-    public static boolean afterUpdate = false;
-    public static int refresh = 5000;
+
+    public static int refresh = 600000;
     public static boolean units;
     public static String inputCityToCheck;
 
