@@ -243,23 +243,17 @@ public class MainActivity extends FragmentActivity implements FragmentChangeList
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
 
         if (tabletSize) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container, sunFragment);
-//            fragmentTransaction.replace(R.id.fragment_container2, moonFragment);
-//
-//            fragmentTransaction.commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, weatherFragment);
+            fragmentTransaction.replace(R.id.fragment_container2, weatherInfo);
+            fragmentTransaction.replace(R.id.fragment_container3, moonFragment);
+            fragmentTransaction.replace(R.id.fragment_container4, sunFragment);
+            fragmentTransaction.replace(R.id.fragment_container5, weatherForecast);
 
-            mPager = findViewById(R.id.ViewPager);
+            fragmentTransaction.commit();
 
-            List<Fragment> fragments = new ArrayList<>();
-            fragments.add(weatherFragment);
-            fragments.add(weatherInfo);
-            fragments.add(weatherForecast);
-            fragments.add(sunFragment);
-            fragments.add(moonFragment);
-            mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), fragments);
-            mPager.setAdapter(mPagerAdapter);
+
         } else {
             mPager = findViewById(R.id.ViewPager);
 

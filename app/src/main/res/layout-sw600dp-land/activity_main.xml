@@ -16,6 +16,15 @@
         android:text="Set localization"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/time_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="godzinka"
+        android:textAlignment="center"
+        android:textSize="27sp"
+        android:textStyle="bold" />
+
     <!--<GridLayout-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="50dp"-->
@@ -49,20 +58,14 @@
     <!--android:layout_height="match_parent"-->
     <!--android:columnCount="1"-->
     <!--android:rowCount="2">-->
-    <TextView
-        android:id="@+id/time_place"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="27sp"
-        android:text="godzinka"/>
+
+
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="2"
-        android:rowCount="1">
+        android:layout_height="450dp"
+        android:columnCount="3"
+        android:rowCount="2">
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -76,9 +79,37 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:background="@android:color/holo_blue_bright" />
+            tools:ignore="MissingConstraints" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container5"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill" />
 
     </GridLayout>
 
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="2">
+
+        <FrameLayout
+            android:id="@+id/fragment_container3"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            tools:ignore="MissingConstraints" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container4"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            tools:ignore="MissingConstraints" />
+    </GridLayout>
 
 </LinearLayout>

@@ -71,7 +71,7 @@ public class Weather extends Fragment {
                 description.setText(Settings.description);
 
 
-                Toast.makeText(getActivity(), "Data downloaded", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Data downloaded", Toast.LENGTH_SHORT).show();
 
             }
 
